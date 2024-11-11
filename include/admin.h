@@ -9,5 +9,8 @@ typedef struct {
 
 void menuAdmin();
 void crearAdmin();
+void leerAdmin();
+void actualizarAdmin();
+void eliminarAdmin();
 
 #endif // ADMIN_H

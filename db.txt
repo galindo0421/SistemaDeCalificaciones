@@ -1,2 +1,0 @@
-Admin,1,admin,adminpass
-Admin,1112793002,andres,andres123
