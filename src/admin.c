@@ -1,176 +1,51 @@
 #include <stdio.h>
 #include "admin.h"
-#include "docente.h"
-#include "estudiante.h"
-#include "curso.h"
-#include "materia.h"
+#include "login.h"
 
-void adminMenu() {
+void menuAdmin() {
     int opcion;
     do {
-        printf("\nMenú Admin\n");
-        printf("1. Gestionar Estudiantes\n");
-        printf("2. Gestionar Docentes\n");
-        printf("3. Gestionar Cursos\n");
-        printf("4. Gestionar Materias\n");
-        printf("5. Salir\n");
+        printf("\nMenú Administrador\n");
+        printf("1. Crear nuevo administrador\n");
+        printf("2. Opción 2\n");
+        printf("3. Salir\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opcion);
 
         switch(opcion) {
             case 1:
-                gestionarEstudiantes();
+                crearAdmin();
                 break;
             case 2:
-                gestionarDocentes();
+                printf("Opción 2 seleccionada\n");
                 break;
             case 3:
-                gestionarCursos();
-                break;
-            case 4:
-                gestionarMaterias();
-                break;
-            case 5:
                 printf("Saliendo...\n");
                 break;
             default:
                 printf("Opción no válida\n");
         }
-    } while(opcion != 5);
+    } while(opcion != 3);
 }
 
-void gestionarEstudiantes() {
-    int opcion;
-    do {
-        printf("\nGestionar Estudiantes\n");
-        printf("1. Crear Estudiante\n");
-        printf("2. Leer Estudiantes\n");
-        printf("3. Actualizar Estudiante\n");
-        printf("4. Eliminar Estudiante\n");
-        printf("5. Regresar\n");
-        printf("Seleccione una opción: ");
-        scanf("%d", &opcion);
+// Función para crear un nuevo administrador
+void crearAdmin() {
+    FILE *fp = fopen("db.txt", "a");
+    if (fp == NULL) {
+        printf("Error al abrir la base de datos\n");
+        return;
+    }
 
-        switch(opcion) {
-            case 1:
-                createEstudiante();
-                break;
-            case 2:
-                readEstudiantes();
-                break;
-            case 3:
-                updateEstudiante();
-                break;
-            case 4:
-                deleteEstudiante();
-                break;
-            case 5:
-                printf("Regresando...\n");
-                break;
-            default:
-                printf("Opción no válida\n");
-        }
-    } while(opcion != 5);
-}
+    Admin admin;
+    printf("Ingrese ID del administrador: ");
+    scanf("%d", &admin.id);
+    printf("Ingrese nombre del administrador: ");
+    scanf("%s", admin.nombre);
+    printf("Ingrese contraseña del administrador: ");
+    scanf("%s", admin.contrasena);
 
-void gestionarDocentes() {
-    int opcion;
-    do {
-        printf("\nGestionar Docentes\n");
-        printf("1. Crear Docente\n");
-        printf("2. Leer Docentes\n");
-        printf("3. Actualizar Docente\n");
-        printf("4. Eliminar Docente\n");
-        printf("5. Regresar\n");
-        printf("Seleccione una opción: ");
-        scanf("%d", &opcion);
+    fprintf(fp, "Admin,%d,%s,%s\n", admin.id, admin.nombre, admin.contrasena);
+    fclose(fp);
 
-        switch(opcion) {
-            case 1:
-                createDocente();
-                break;
-            case 2:
-                readDocentes();
-                break;
-            case 3:
-                updateDocente();
-                break;
-            case 4:
-                deleteDocente();
-                break;
-            case 5:
-                printf("Regresando...\n");
-                break;
-            default:
-                printf("Opción no válida\n");
-        }
-    } while(opcion != 5);
-}
-
-void gestionarCursos() {
-    int opcion;
-    do {
-        printf("\nGestionar Cursos\n");
-        printf("1. Crear Curso\n");
-        printf("2. Leer Cursos\n");
-        printf("3. Actualizar Curso\n");
-        printf("4. Eliminar Curso\n");
-        printf("5. Regresar\n");
-        printf("Seleccione una opción: ");
-        scanf("%d", &opcion);
-
-        switch(opcion) {
-            case 1:
-                createCurso();
-                break;
-            case 2:
-                readCursos();
-                break;
-            case 3:
-                updateCurso();
-                break;
-            case 4:
-                deleteCurso();
-                break;
-            case 5:
-                printf("Regresando...\n");
-                break;
-            default:
-                printf("Opción no válida\n");
-        }
-    } while(opcion != 5);
-}
-
-void gestionarMaterias() {
-    int opcion;
-    do {
-        printf("\nGestionar Materias\n");
-        printf("1. Crear Materia\n");
-        printf("2. Leer Materias\n");
-        printf("3. Actualizar Materia\n");
-        printf("4. Eliminar Materia\n");
-        printf("5. Regresar\n");
-        printf("Seleccione una opción: ");
-        scanf("%d", &opcion);
-
-        switch(opcion) {
-            case 1:
-                createMateria();
-                break;
-            case 2:
-                readMaterias();
-                break;
-            case 3:
-                updateMateria();
-                break;
-            case 4:
-                deleteMateria();
-                break;
-            case 5:
-                printf("Regresando...\n");
-                break;
-            default:
-                printf("Opción no válida\n");
-        }
-    } while(opcion != 5);
+    printf("Administrador creado exitosamente.\n");
 }

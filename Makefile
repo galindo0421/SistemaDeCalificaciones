@@ -1,14 +1,18 @@
+# El compilador a utilizar
 CC = gcc
+# Las banderas de compilación
 CFLAGS = -Wall -g -Iinclude
+
+# Directorios
 OBJ_DIR = obj
 SRC_DIR = src
-TARGET = program
+TARGET = CalifiC
 
 # Archivos fuente
-SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/admin.c $(SRC_DIR)/docente.c $(SRC_DIR)/estudiante.c $(SRC_DIR)/sistema.c $(SRC_DIR)/curso.c $(SRC_DIR)/materia.c
+SOURCES = main.c $(SRC_DIR)/admin.c $(SRC_DIR)/login.c
 
 # Archivos objeto
-OBJECTS = $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/admin.o $(OBJ_DIR)/login.o
 
 # Regla por defecto
 all: $(TARGET)
@@ -18,7 +22,13 @@ $(TARGET): $(OBJECTS)
 	$(CC) -o $@ $^
 
 # Regla para compilar los archivos objeto
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/main.o: main.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/admin.o: $(SRC_DIR)/admin.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/login.o: $(SRC_DIR)/login.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Crear el directorio obj si no existe
