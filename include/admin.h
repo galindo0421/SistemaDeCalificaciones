@@ -12,5 +12,5 @@ void crearAdmin();
 void leerAdmin();
 void actualizarAdmin();
 void eliminarAdmin();
-
+void cerrarSesion();
 #endif // ADMIN_H

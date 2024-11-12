@@ -4,6 +4,27 @@
 #include "admin.h"
 #include <errno.h>
 
+
+void manejarLogin() { 
+    char usuario[50]; 
+    char contrasena[50]; 
+    int tipoUsuario; 
+
+    printf("Ingrese su usuario:\n"); 
+    scanf("%s", usuario); 
+    printf("Ingrese su contraseña:\n"); 
+    scanf("%s", contrasena); 
+
+tipoUsuario = loginAdmin(usuario, contrasena);
+
+if (tipoUsuario == 1) { 
+    printf("Bienvenido Administrador\n"); 
+    menuAdmin(); 
+    } else { 
+    printf("Usuario o contraseña incorrectos\n"); 
+    }
+}
+
 // Función para verificar si un usuario es administrador
 int esAdmin(char *usuario, char *contrasena) {
     // Validación de entrada
@@ -45,4 +66,11 @@ int loginAdmin(char *usuario, char *contrasena) {
 
         return 0; // Usuario no encontrado
     }
+}
+
+
+void cerrarSesion() {
+    printf("Cerrando sesion...\n");
+    // Aquí puedes agregar cualquier limpieza adicional si es necesario
+    manejarLogin();
 }

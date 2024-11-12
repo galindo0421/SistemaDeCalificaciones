@@ -11,6 +11,7 @@ void menuAdmin() {
         printf("2. Leer administradores\n");
         printf("3. Actualizar administrador\n");
         printf("4. Eliminar administrador\n");
+        printf("5. Cerrar sesion");
         printf("0. Salir\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opcion);
@@ -27,6 +28,9 @@ void menuAdmin() {
                 break;
             case 4:
                 eliminarAdmin();
+                break;
+            case 5:
+                cerrarSesion();
                 break;
             case 0:
                 printf("Saliendo...\n");
