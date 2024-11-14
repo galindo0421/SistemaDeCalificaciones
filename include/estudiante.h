@@ -5,6 +5,7 @@ typedef struct{
     int id;
     char nombre[50];
     char contrasena[50];
+    char apellido[50];
 } Estudiante;
 
 void mostrarCalificacion();
