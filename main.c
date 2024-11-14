@@ -4,7 +4,7 @@
 #include "login.h"
 
 int main() {
-    printf("-----Bienvenido a CalifiC-----\n");
+    saludoBienvenida();
     manejarLogin();
     return 0;
 }
