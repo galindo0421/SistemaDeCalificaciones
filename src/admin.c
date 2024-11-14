@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <windows.h>
+#include <stdlib.h>
 #include "admin.h"
 #include "login.h"
 
@@ -11,7 +13,7 @@ void menuAdmin() {
         printf("2. Leer administradores\n");
         printf("3. Actualizar administrador\n");
         printf("4. Eliminar administrador\n");
-        printf("5. Cerrar sesion");
+        printf("5. Cerrar sesion\n");
         printf("0. Salir\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opcion);
@@ -34,7 +36,8 @@ void menuAdmin() {
                 break;
             case 0:
                 printf("Saliendo...\n");
-                break;
+                Sleep(2000);  // Espera 2 segundos (2000 milisegundos) antes de salir y evitar que el usuario se quede con el programa abierto en el sistema, ademas si queremos implementar esto en (linux/mac) el valor se escribe en segundos y no en milisegundos.
+                exit(0); // esto cierra (detiene) en su totalidad el programa.
             default:
                 printf("Opción no válida\n");
         }

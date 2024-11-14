@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
+#include <windows.h>
+#include <stdlib.h>
 #include "login.h"
 #include "admin.h"
-#include <errno.h>
 
+
+void saludoBienvenida(){
+    printf("\n-----Bienvenido a CalifiC-----\n");
+}
 
 void manejarLogin() { 
     char usuario[50]; 
@@ -71,6 +77,8 @@ int loginAdmin(char *usuario, char *contrasena) {
 
 void cerrarSesion() {
     printf("Cerrando sesion...\n");
+    Sleep(2000);
+    saludoBienvenida();
     // Aquí puedes agregar cualquier limpieza adicional si es necesario
     manejarLogin();
 }
