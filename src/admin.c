@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include <admin.h>
-#include <login.h>
+#include "admin.h"
+#include "login.h"
 
 void menuAdmin() {
     int opcion;
