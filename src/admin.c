@@ -5,8 +5,13 @@
 #include "admin.h"
 #include "login.h"
 
-
-void menuPrincipal() {
+void menuCrud(){
+    printf("1. Crear\n");
+    printf("2. Leer\n");
+    printf("3. Actualizar\n");
+    printf("4. Eliminar\n");
+}
+void menuPrincipalAdmin() {
     int opcion;
     do {
         printf("\nMenú Administrador\n");
@@ -15,23 +20,17 @@ void menuPrincipal() {
         printf("3. Gestionar Estudiante\n");
         printf("4. Gestionar curso\n");
         printf("5. Gestionar asignatura\n");
-        printf("5. Gestionar calificacion\n");
-        printf("6. Cerrar sesion\n");
+        printf("6. Gestionar calificacion\n");
+        printf("7. Cerrar sesion\n");
         printf("0. Salir\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opcion);
 
         switch(opcion) {
             case 1:
-                menuAdmin();
+                menuGestionAdmin();
                 break;
-            case 2:
-                menuDocente();
-                break;
-            case 3:
-                menuEstudiante();
-                break;
-            case 6:
+            case 7:
                 cerrarSesion();
                 break;
             case 0:
@@ -43,14 +42,11 @@ void menuPrincipal() {
         }
     } while(opcion != 0);
 }
-void menuAdmin() {
+void menuGestionAdmin() {
     int opcion;
     do {
-        printf("\nMenú Administrador\n");
-        printf("1. Crear nuevo administrador\n");
-        printf("2. Leer administradores\n");
-        printf("3. Actualizar administrador\n");
-        printf("4. Eliminar administrador\n");
+        printf("\nMenú De Gestion De Administradores\n");
+        menuCrud();
         printf("0. volver al menú principal\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opcion);
@@ -71,7 +67,7 @@ void menuAdmin() {
             case 0:
                 printf("Volviendo al menú principal...\n");
                 Sleep(2000);
-                menuPrincipal();
+                menuPrincipalAdmin();
             default:
                 printf("Opción no válida\n");
         }
@@ -109,7 +105,7 @@ void leerAdmin() {
     }
 
     Admin admin;
-    printf("Lista de administradores:\n");
+    printf("\nLista de administradores:\n");
     while (fscanf(fp, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admin.id, admin.nombre, admin.contrasena) == 3) {
         printf("ID: %d, Nombre: %s, Contraseña: %s\n", admin.id, admin.nombre, admin.contrasena);
     }
@@ -171,7 +167,7 @@ void actualizarAdmin() {
     printf("Administrador actualizado exitosamente.\n");
 
     // Mostrar el menú nuevamente
-    menuAdmin(); // Llama a la función del menú para que el usuario pueda continuar
+    menuGestionAdmin(); // Llama a la función del menú para que el usuario pueda continuar
 }
 
 void eliminarAdmin() {

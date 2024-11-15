@@ -7,7 +7,9 @@ typedef struct {
     char contrasena[50];
 } Admin;
 
-void menuAdmin();
+void menuCrud();
+void menuPrincipalAdmin();
+void menuGestionAdmin();
 void crearAdmin();
 void leerAdmin();
 void actualizarAdmin();

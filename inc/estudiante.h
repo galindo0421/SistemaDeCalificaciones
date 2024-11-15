@@ -6,11 +6,13 @@
 typedef struct{
     int id;
     char nombre[50];
-    char contrasena[50];
     char apellido[50];
+    char contrasena[50];
     Curso curso;
 } Estudiante;
 
+
+void menuEstudiante();
 void crearEstudiante();
 void actualizarEstudiante();
 void mostrarEstudiante();

@@ -25,7 +25,7 @@ tipoUsuario = loginAdmin(usuario, contrasena);
 
 if (tipoUsuario == 1) { 
     printf("Bienvenido Administrador\n"); 
-    menuAdmin(); 
+    menuPrincipalAdmin(); 
     } else { 
     printf("Usuario o contraseña incorrectos\n"); 
     }
