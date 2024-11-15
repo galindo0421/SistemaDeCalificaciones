@@ -5,6 +5,44 @@
 #include "admin.h"
 #include "login.h"
 
+
+void menuPrincipal() {
+    int opcion;
+    do {
+        printf("\nMenú Administrador\n");
+        printf("1. Gestionar administrador\n");
+        printf("2. Gestionar docente\n");
+        printf("3. Gestionar Estudiante\n");
+        printf("4. Gestionar curso\n");
+        printf("5. Gestionar asignatura\n");
+        printf("5. Gestionar calificacion\n");
+        printf("6. Cerrar sesion\n");
+        printf("0. Salir\n");
+        printf("Seleccione una opción: ");
+        scanf("%d", &opcion);
+
+        switch(opcion) {
+            case 1:
+                menuAdmin();
+                break;
+            case 2:
+                menuDocente();
+                break;
+            case 3:
+                menuEstudiante();
+                break;
+            case 6:
+                cerrarSesion();
+                break;
+            case 0:
+                printf("Saliendo...\n");
+                Sleep(2000);  // Espera 2 segundos (2000 milisegundos) antes de salir y evitar que el usuario se quede con el programa abierto en el sistema, ademas si queremos implementar esto en (linux/mac) el valor se escribe en segundos y no en milisegundos.
+                exit(0); // esto cierra (detiene) en su totalidad el programa.
+            default:
+                printf("Opción no válida\n");
+        }
+    } while(opcion != 0);
+}
 void menuAdmin() {
     int opcion;
     do {
@@ -13,8 +51,7 @@ void menuAdmin() {
         printf("2. Leer administradores\n");
         printf("3. Actualizar administrador\n");
         printf("4. Eliminar administrador\n");
-        printf("5. Cerrar sesion\n");
-        printf("0. Salir\n");
+        printf("0. volver al menú principal\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opcion);
 
@@ -31,13 +68,10 @@ void menuAdmin() {
             case 4:
                 eliminarAdmin();
                 break;
-            case 5:
-                cerrarSesion();
-                break;
             case 0:
-                printf("Saliendo...\n");
-                Sleep(2000);  // Espera 2 segundos (2000 milisegundos) antes de salir y evitar que el usuario se quede con el programa abierto en el sistema, ademas si queremos implementar esto en (linux/mac) el valor se escribe en segundos y no en milisegundos.
-                exit(0); // esto cierra (detiene) en su totalidad el programa.
+                printf("Volviendo al menú principal...\n");
+                Sleep(2000);
+                menuPrincipal();
             default:
                 printf("Opción no válida\n");
         }

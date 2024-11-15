@@ -8,8 +8,9 @@ typedef struct{
     char apellido[50];
 } Docente;
 
-void crearCalificacion();
-void actualizarCalificacion();
-void mostrarCalificacion();
-void eliminarCalificacion();
+void crearDocente();
+void actualizarDocente();
+void mostrarDocente();
+void eliminarDocente();
+
 #endif
