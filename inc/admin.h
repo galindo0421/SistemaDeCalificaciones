@@ -11,7 +11,7 @@ void menuCrud();
 void menuPrincipalAdmin();
 void menuGestionAdmin();
 void crearAdmin();
-void leerAdmin();
+void mostrarAdmin();
 void actualizarAdmin();
 void eliminarAdmin();
 void cerrarSesion();
