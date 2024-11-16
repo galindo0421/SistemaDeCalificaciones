@@ -68,8 +68,10 @@ void menuGestionAdmin() {
                 printf("Volviendo al menú principal...\n");
                 Sleep(2000);
                 menuPrincipalAdmin();
+                break;
             default:
                 printf("Opción no válida\n");
+                break;
         }
     } while(opcion != 0);
 }
@@ -90,7 +92,7 @@ void crearAdmin() {
     printf("Ingrese contraseña del administrador: ");
     scanf("%s", admin.contrasena);
 
-    punteroArchivorintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
+    fprintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
     fclose(punteroArchivo);
 
     printf("Administrador creado exitosamente.\n");
@@ -160,7 +162,7 @@ void actualizarAdmin() {
     }
 
     for (int i = 0; i < count; i++) {
-        punteroArchivorintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admins[i].id, admins[i].nombre, admins[i].contrasena);
+        fprintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admins[i].id, admins[i].nombre, admins[i].contrasena);
     }
 
     fclose(punteroArchivo);
@@ -197,7 +199,7 @@ void eliminarAdmin() {
             printf("Administrador con ID %d eliminado.\n", admin.id);
         } else {
             // Escribir en el archivo temporal si no es el administrador a eliminar
-            punteroArchivorintf(temp, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
+            fprintf(temp, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena); // Cambiar fprintf por fprintf
         }
     }
 
