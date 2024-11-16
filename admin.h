@@ -1,8 +1,25 @@
+#ifndef ADMIN_H
+#define ADMIN_H
+
+typedef struct {
+    int id;
+    char nombre[50];
+    char contrasena[50];
+} Admin;
+
+void menuCrud();
+void menuPrincipalAdmin();
+void menuGestionAdmin();
+void crearAdmin();
+void mostrarAdmin();
+void actualizarAdmin();
+void eliminarAdmin();
+void cerrarSesion();
+
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
 #include <stdlib.h>
-#include "admin.h"
 #include "login.h"
 
 void menuCrud(){
@@ -219,3 +236,5 @@ void eliminarAdmin() {
         }   
     }
 }
+
+#endif

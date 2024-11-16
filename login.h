@@ -1,10 +1,19 @@
+#ifndef LOGIN_H
+#define LOGIN_H
+
+void saludoBienvenida();
+int esAdmin(char *usuario, char *contrasena);
+int loginAdmin(char *usuario, char *contrasena);
+void manejarLogin();
+
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include <windows.h>
 #include <stdlib.h>
-#include "login.h"
 #include "admin.h"
+
 
 
 void saludoBienvenida(){
@@ -32,35 +41,32 @@ if (tipoUsuario == 1) {
 }
 
 // Función para verificar si un usuario es administrador
-int esAdmin(char *usuario, char *contrasena) {
-    // Validación de entrada
-    if (usuario == NULL || contrasena == NULL) {
-        printf("Usuario o contraseña no pueden ser nulos\n");
-        return 0; // Entrada inválida
-    }
+int esAdmin(char *usuario, char *contrasena) { 
+    if (usuario == NULL || contrasena == NULL) { 
+        printf("Usuario o contraseña no pueden ser nulos\n"); 
+        return 0; 
+    } 
+    
+    FILE *punteroArchivo = fopen("data/admin.txt", "r"); 
+    if (punteroArchivo == NULL) { 
+        printf("Error al abrir la base de datos en admin.txt: %s\n", strerror(errno)); 
+return 0; }
 
-    FILE *fp = fopen("data/admin.txt", "r");
-    if (fp == NULL) {
-        printf("Error al abrir la base de datos: %s\n", strerror(errno)); // Mensaje de error mejorado
-        return 0;
-    }
-
-    char line[256];
-    while (fgets(line, sizeof(line), fp)) {
+    char linea[256];
+    while (fgets(linea, sizeof(linea), punteroArchivo)) {
         char tipo[10], id[10], nombre[50], password[50];
-        sscanf(line, "Tipo:%[^;];ID:%[^;];Nombre:%[^;];Password:%[^;];", tipo, id, nombre, password);
+        sscanf(linea, "Tipo:%[^;];ID:%[^;];Nombre:%[^;];Password:%[^;];", tipo, id, nombre, password);
         
         // Asegúrate de que la contraseña se lea correctamente
         nombre[strcspn(nombre, "\n")] = 0; // Eliminar salto de línea
         password[strcspn(password, "\n")] = 0; // Eliminar salto de línea
         
         if (strcmp(nombre, usuario) == 0 && strcmp(password, contrasena) == 0) {
-            fclose(fp);
+            fclose(punteroArchivo);
             return 1; // Admin encontrado
         }
     }
-    fclose(fp);
-    
+    fclose(punteroArchivo);
     return 0; // Admin no encontrado
 }
 
@@ -69,11 +75,9 @@ int loginAdmin(char *usuario, char *contrasena) {
     if (esAdmin(usuario, contrasena)) {
         return 1; // Administrador
     } else {
-
         return 0; // Usuario no encontrado
     }
 }
-
 
 void cerrarSesion() {
     printf("Cerrando sesion...\n");
@@ -82,3 +86,5 @@ void cerrarSesion() {
     // Aquí puedes agregar cualquier limpieza adicional si es necesario
     manejarLogin();
 }
+
+#endif // LOGIN_H
