@@ -1,5 +1,5 @@
-#ifndef ESTUDIANTE_H
-#define ESTUDIANTE_H
+#ifndef Docente_H
+#define Docente_H
 
 typedef struct{
     int id;
@@ -14,5 +14,9 @@ void crearDocente();
 void actualizarDocente();
 void mostrarDocente();
 void eliminarDocente();
+void crearCalificacion();
+void actualizarCalificacion();
+void mostrarCalificacion();
+void generarBoletin();
 
 #endif

@@ -1,14 +1,13 @@
 #ifndef ESTUDIANTE_H
 #define ESTUDIANTE_H
-
-#include "curso.h"
+#include "asignatura.h"
 
 typedef struct{
     int id;
     char nombre[50];
     char apellido[50];
     char contrasena[50];
-    Curso curso;
+    Asignatura asignaturas[10];
 } Estudiante;
 
 

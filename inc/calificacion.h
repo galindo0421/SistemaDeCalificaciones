@@ -1,11 +1,13 @@
-#ifndef CALIFICACIONES_H
-#define CALIFICACIONES_H
+#ifndef CALIFICACION_H
+#define CALIFICACION_H
+#include "estudiante.h"
+#include "docente.h"
 
 typedef struct {
     int id;
-    int estudiante_id;
-    int docente_id;
-    int asignatura_id;
+    Estudiante estudianteId;
+    Docente docenteId;
+    int asignaturaId;
     float calificacion;
 } Calificacion;
 

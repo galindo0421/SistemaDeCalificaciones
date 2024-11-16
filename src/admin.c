@@ -56,7 +56,7 @@ void menuGestionAdmin() {
                 crearAdmin();
                 break;
             case 2:
-                leerAdmin();
+                mostrarAdmin();
                 break;
             case 3:
                 actualizarAdmin();
@@ -76,8 +76,8 @@ void menuGestionAdmin() {
 
 // Función para crear un nuevo administrador
 void crearAdmin() {
-    FILE *fp = fopen("data/admin.txt", "a");
-    if (fp == NULL) {
+    FILE *punteroArchivo = fopen("data/admin.txt", "a");
+    if (punteroArchivo == NULL) {
         printf("Error al abrir la base de datos\n");
         return;
     }
@@ -90,32 +90,32 @@ void crearAdmin() {
     printf("Ingrese contraseña del administrador: ");
     scanf("%s", admin.contrasena);
 
-    fprintf(fp, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
-    fclose(fp);
+    punteroArchivorintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
+    fclose(punteroArchivo);
 
     printf("Administrador creado exitosamente.\n");
 }
 
 // Funcion para leer 
-void leerAdmin() {
-    FILE *fp = fopen("data/admin.txt", "r");
-    if (fp == NULL) {
+void mostrarAdmin() {
+    FILE *punteroArchivo = fopen("data/admin.txt", "r");
+    if (punteroArchivo == NULL) {
         printf("Error al abrir la base de datos\n");
         return;
     }
 
     Admin admin;
     printf("\nLista de administradores:\n");
-    while (fscanf(fp, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admin.id, admin.nombre, admin.contrasena) == 3) {
+    while (fscanf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admin.id, admin.nombre, admin.contrasena) == 3) {
         printf("ID: %d, Nombre: %s, Contraseña: %s\n", admin.id, admin.nombre, admin.contrasena);
     }
 
-    fclose(fp);
+    fclose(punteroArchivo);
 }
 
 void actualizarAdmin() {
-    FILE *fp = fopen("data/admin.txt", "r");
-    if (fp == NULL) {
+    FILE *punteroArchivo = fopen("data/admin.txt", "r");
+    if (punteroArchivo == NULL) {
         printf("Error al abrir la base de datos\n");
         return;
     }
@@ -124,10 +124,10 @@ void actualizarAdmin() {
     Admin admins[MAX_ADMINS];
     int count = 0;
 
-    while (fscanf(fp, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admins[count].id, admins[count].nombre, admins[count].contrasena) == 3) {
+    while (fscanf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admins[count].id, admins[count].nombre, admins[count].contrasena) == 3) {
         count++;
     }
-    fclose(fp);
+    fclose(punteroArchivo);
 
     int idBuscado;
     printf("Ingrese el ID del administrador a actualizar: ");
@@ -153,17 +153,17 @@ void actualizarAdmin() {
     }
 
     // Escribir todos los administradores de nuevo en el archivo
-    fp = fopen("data/admin.txt", "w");
-    if (fp == NULL) {
+    punteroArchivo = fopen("data/admin.txt", "w");
+    if (punteroArchivo == NULL) {
         printf("Error al abrir la base de datos para escribir\n");
         return;
     }
 
     for (int i = 0; i < count; i++) {
-        fprintf(fp, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admins[i].id, admins[i].nombre, admins[i].contrasena);
+        punteroArchivorintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admins[i].id, admins[i].nombre, admins[i].contrasena);
     }
 
-    fclose(fp);
+    fclose(punteroArchivo);
     printf("Administrador actualizado exitosamente.\n");
 
     // Mostrar el menú nuevamente
@@ -171,8 +171,8 @@ void actualizarAdmin() {
 }
 
 void eliminarAdmin() {
-    FILE *fp = fopen("data/admin.txt", "r");
-    if (fp == NULL) {
+    FILE *punteroArchivo = fopen("data/admin.txt", "r");
+    if (punteroArchivo == NULL) {
         printf("Error al abrir la base de datos\n");
         return;
     }
@@ -180,7 +180,7 @@ void eliminarAdmin() {
     FILE *temp = fopen("data/temp.txt", "w");
     if (temp == NULL) {
         printf("Error al crear el archivo temporal\n");
-        fclose(fp);
+        fclose(punteroArchivo);
         return;
     }
 
@@ -191,17 +191,17 @@ void eliminarAdmin() {
     Admin admin;
     int encontrado = 0;
 
-    while (fscanf(fp, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admin.id, admin.nombre, admin.contrasena) == 3) {
+    while (fscanf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admin.id, admin.nombre, admin.contrasena) == 3) {
         if (admin.id == idBuscado) {
             encontrado = 1; // Se encontró el administrador
             printf("Administrador con ID %d eliminado.\n", admin.id);
         } else {
             // Escribir en el archivo temporal si no es el administrador a eliminar
-            fprintf(temp, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
+            punteroArchivorintf(temp, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
         }
     }
 
-    fclose(fp); 
+    fclose(punteroArchivo); 
     fclose(temp); 
 
     if (!encontrado) { 
