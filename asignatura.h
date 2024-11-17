@@ -1,12 +1,11 @@
 #ifndef ASIGNATURA_H
 #define ASIGNATURA_H
 #include "docente.h"
-#include "calificacion.h"
+#include "estudiante.h"
 
 typedef struct {
     char nombre[50];
-    Docente docente;
-    Calificacion calificaciones[50];
+    float calificaciones[6];
 } Asignatura;
 
 void crearAsignatura();

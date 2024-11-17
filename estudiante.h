@@ -7,7 +7,6 @@ typedef struct{
     char nombre[50];
     char apellido[50];
     char contrasena[50];
-    Asignatura asignaturas[10];
 } Estudiante;
 
 

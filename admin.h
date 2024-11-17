@@ -1,10 +1,15 @@
 #ifndef ADMIN_H
 #define ADMIN_H
-
+#include "estudiante.h"
+#include "docente.h"
+#include "asignatura.h"
 typedef struct {
     int id;
     char nombre[50];
     char contrasena[50];
+    Estudiante estudiantes[4];
+    Docente docentes[4];
+    Asignatura asignaturas[10];
 } Admin;
 
 void menuCrud();
