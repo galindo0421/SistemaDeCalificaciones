@@ -1,11 +1,12 @@
-#ifndef Docente_H
-#define Docente_H
-
+#ifndef DOCENTE_H
+#define DOCENTE_H
+#include "asignatura.h"
 typedef struct{
     int id;
     char nombre[50];
     char apellido[50];
     char contrasena[50];
+    Asignatura asignaturas[6];
 } Docente;
 
 
@@ -14,9 +15,4 @@ void crearDocente();
 void actualizarDocente();
 void mostrarDocente();
 void eliminarDocente();
-void crearCalificacion();
-void actualizarCalificacion();
-void mostrarCalificacion();
-void generarBoletin();
-
 #endif
