@@ -4,11 +4,15 @@
 #include "login.h"
 
 int main() {
+    /*if(esAdmin(usuario, contrasena)){
+        menuGestionAdmin();
+    }else if(login()){
+        menuDocente();
+    }else if (login()){
+        menuEstudiante(estudiante[0]);
+    }*/
     //saludoBienvenida();
     //manejarLogin();
     menuEstudiante();
-    Estudiante estudiante[2];
-    estudiante[0] = crearEstudiante();
-    actualizarEstudiante(estudiante[0]);
     return 0;
 }

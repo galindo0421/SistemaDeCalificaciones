@@ -3,7 +3,7 @@
 
 void saludoBienvenida();
 int esAdmin(char *usuario, char *contrasena);
-int loginAdmin(char *usuario, char *contrasena);
+int login(char *usuario, char *contrasena);
 void manejarLogin();
 
 
@@ -30,38 +30,38 @@ void manejarLogin() {
     printf("Ingrese su contraseña:\n"); 
     scanf("%s", contrasena); 
 
-tipoUsuario = loginAdmin(usuario, contrasena);
+    tipoUsuario = login(usuario, contrasena);
 
-if (tipoUsuario == 1) { 
-    printf("Bienvenido Administrador\n"); 
-    menuPrincipalAdmin(); 
-    } else { 
-    printf("Usuario o contraseña incorrectos\n"); 
+    if(tipoUsuario == 1){ 
+        printf("Bienvenido Administrador\n"); 
+        menuPrincipalAdmin(); 
+        }else{ 
+        printf("Usuario o contraseña incorrectos\n"); 
     }
 }
 
 // Función para verificar si un usuario es administrador
-int esAdmin(char *usuario, char *contrasena) { 
-    if (usuario == NULL || contrasena == NULL) { 
+int esAdmin(char *usuario, char *contrasena){ 
+    if (usuario == NULL || contrasena == NULL){ 
         printf("Usuario o contraseña no pueden ser nulos\n"); 
         return 0; 
-    } 
+    }
     
     FILE *punteroArchivo = fopen("data/admin.txt", "r"); 
     if (punteroArchivo == NULL) { 
         printf("Error al abrir la base de datos en admin.txt: %s\n", strerror(errno)); 
-return 0; }
+    return 0; }
 
     char linea[256];
     while (fgets(linea, sizeof(linea), punteroArchivo)) {
-        char tipo[10], id[10], nombre[50], password[50];
-        sscanf(linea, "Tipo:%[^;];ID:%[^;];Nombre:%[^;];Password:%[^;];", tipo, id, nombre, password);
+        char tipo[10], id[10], nombre[50], contrasena[50];
+        sscanf(linea, "Tipo:%[^;];ID:%[^;];Nombre:%[^;];contrasena:%[^;];", tipo, id, nombre, contrasena);
         
         // Asegúrate de que la contraseña se lea correctamente
         nombre[strcspn(nombre, "\n")] = 0; // Eliminar salto de línea
-        password[strcspn(password, "\n")] = 0; // Eliminar salto de línea
+        contrasena[strcspn(contrasena, "\n")] = 0; // Eliminar salto de línea
         
-        if (strcmp(nombre, usuario) == 0 && strcmp(password, contrasena) == 0) {
+        if (strcmp(nombre, usuario) == 0 && strcmp(contrasena, contrasena) == 0) {
             fclose(punteroArchivo);
             return 1; // Admin encontrado
         }
@@ -71,7 +71,7 @@ return 0; }
 }
 
 // Implementación de la función de login para administradores
-int loginAdmin(char *usuario, char *contrasena) {
+int login(char *usuario, char *contrasena) {
     if (esAdmin(usuario, contrasena)) {
         return 1; // Administrador
     } else {

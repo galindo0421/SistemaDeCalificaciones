@@ -11,17 +11,6 @@ typedef struct{
     Asignatura asignaturas[6];
 } Estudiante;
 
-void menuEstudiante(){
-    printf("\nMenu Estudiante\n");
-    printf("1. Crear estudiante\n");
-    printf("2. Actualizar estudiante\n");
-    printf("3. Mostrar estudiante\n");
-    printf("4. Eliminar estudiante\n");
-    printf("5. Mostrar calificacion\n");
-    printf("6. Generar boletin\n");
-    printf("0. Salir\n");
-    printf("Seleccione una opcion: ");
-}
 Estudiante crearEstudiante(){
     Estudiante estudiante;
     printf("\nIngrese el ID de estudiante: \n");
@@ -30,7 +19,7 @@ Estudiante crearEstudiante(){
     scanf("%s", estudiante.nombre);
     printf("Ingrese el apellido del estudiante: \n");
     scanf("%s", estudiante.apellido);
-    printf("Ingrese la contraseña del estudiante: \n");
+    printf("Ingrese la contrasena del estudiante: \n");
     scanf("%s", estudiante.contrasena);
     printf("\nEstudiante creado exitosamente.\n");
     return estudiante;
@@ -52,24 +41,33 @@ Estudiante actualizarEstudiante(Estudiante estudiante){
         switch (opcion)
         {
         case 1:
-            printf("Ingrese el nuevo ID de estudiante: \n");
+            printf("Ingrese el nuevo ID de estudiante:");
             scanf("%d", &estudiante.id);
             printf("ID actualizado exitosamente.\n");
             break;
         case 2:
-            printf("Ingrese el nuevo nombre del estudiante: \n");
+            printf("Ingrese el nuevo nombre del estudiante:");
             scanf("%s", estudiante.nombre);
             printf("Nombre actualizado exitosamente.\n");
             break;
         case 3:
-            printf("Ingrese el nuevo apellido del estudiante: \n");
+            printf("Ingrese el nuevo apellido del estudiante:");
             scanf("%s", estudiante.apellido);
             printf("Apellido actualizado exitosamente.\n");
             break;
         case 4:
-            printf("Ingrese la nueva contraseña del estudiante: \n");
+            printf("Ingrese la nueva contraseña del estudiante:");
             scanf("%s", estudiante.contrasena);
             printf("Contraseña actualizada exitosamente.\n");
+        case 5:
+            /*printf("Ingrese el nuevo nombre de asignatura: \n");
+            scanf("%d", &estudiante.asignaturas[0].nombre);
+            printf("Nombre de asignatura actualizado exitosamente.\n");
+            break;*/
+        case 6:
+            printf("Ingrese la nueva calificacion de asignatura: \n");
+            scanf("%f", &estudiante.asignaturas[0].calificaciones[0]);
+            printf("Calificacion actualizada correctamente\n");
         case 0:
             printf("\nHas salido del menu de crear estudiante\n");
             break;
@@ -88,5 +86,46 @@ void mostrarEstudiante(Estudiante estudiante){
 void eliminarEstudiante();
 void mostrarCalificacion();
 void generarBoletin();
+void menuEstudiante(){
+    Estudiante estudiante;
+    int opcion = 1;
+    while(opcion != 0){
+        printf("\nMenu Estudiante\n");
+        printf("1. Crear estudiante\n");
+        printf("2. Actualizar estudiante\n");
+        printf("3. Mostrar estudiante\n");
+        printf("4. Eliminar estudiante\n");
+        printf("5. Mostrar calificacion\n");
+        printf("6. Generar boletin\n");
+        printf("0. Salir\n");
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
+        switch (opcion){
+            case 1:
+                estudiante = crearEstudiante();
+                break;
+            case 2:
+                estudiante = actualizarEstudiante(estudiante);
+                break;
+            case 3:
+                mostrarEstudiante(estudiante);
+                break;
+            case 4:
+                //eliminarEstudiante();
+                break;
+            case 5:
+                //mostrarCalificacion();
+                break;
+            case 6:
+                //generarBoletin();
+                break;
+            case 0:
+                printf("\nHas salido del menu de estudiante\n");
+                break;
+            default:
+                break;
+        }
+    }
+}
 
 #endif
