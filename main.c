@@ -3,16 +3,15 @@
 #include "admin.h"
 #include "login.h"
 
-int main() {
-    /*if(esAdmin(usuario, contrasena)){
-        menuGestionAdmin();
-    }else if(login()){
-        menuDocente();
-    }else if (login()){
-        menuEstudiante(estudiante[0]);
-    }*/
+int main(){
+    FILE *archivoEstudiantes = fopen("data/estudiante.txt", "r");
+    if (archivoEstudiantes == NULL) {
+        printf("Error al abrir el archivo de estudiantes\n");
+        return 1;
+    }
+    //Estudiante *estudiantes;
     //saludoBienvenida();
     //manejarLogin();
-    menuEstudiante();
+    //menuEstudiante(estudiantes);
     return 0;
 }
