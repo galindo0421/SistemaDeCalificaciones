@@ -2,6 +2,8 @@
 #define ESTUDIANTE_H
 #include "asignatura.h"
 #include <stdio.h>
+#include "utilidades.h"
+#include <stdlib.h>
 
 typedef struct{
     int id;
@@ -22,8 +24,9 @@ Estudiante crearEstudiante(){
     printf("Ingrese la contrasena del estudiante: \n");
     scanf("%s", estudiante.contrasena);
     printf("\nEstudiante creado exitosamente.\n");
-    return estudiante;
+    return estudiante;  
 }
+
 void menuActualizarEstudiante(){
     printf("\nMenu para actualizar datos de un estudiante\n");
     printf("1. Cambiar ID\n");
@@ -33,31 +36,31 @@ void menuActualizarEstudiante(){
     printf("0. Salir\n");
     printf("Seleccione una opcion: ");
 }
-Estudiante actualizarEstudiante(Estudiante estudiante){ 
+
+Estudiante actualizarEstudiante(Estudiante *estudiantes, int tamanoVector){
     int opcion = 1;    
     while (opcion != 0){
         menuActualizarEstudiante();
         scanf("%d", &opcion);
-        switch (opcion)
-        {
+        switch (opcion){
         case 1:
             printf("Ingrese el nuevo ID de estudiante:");
-            scanf("%d", &estudiante.id);
+            scanf("%d", &estudiantes[tamanoVector].id);
             printf("ID actualizado exitosamente.\n");
-            break;
+            break;  
         case 2:
             printf("Ingrese el nuevo nombre del estudiante:");
-            scanf("%s", estudiante.nombre);
+            scanf("%s", estudiantes[tamanoVector].nombre);
             printf("Nombre actualizado exitosamente.\n");
             break;
         case 3:
             printf("Ingrese el nuevo apellido del estudiante:");
-            scanf("%s", estudiante.apellido);
+            scanf("%s", estudiantes[tamanoVector].apellido);
             printf("Apellido actualizado exitosamente.\n");
             break;
         case 4:
             printf("Ingrese la nueva contraseña del estudiante:");
-            scanf("%s", estudiante.contrasena);
+            scanf("%s", estudiantes[tamanoVector].contrasena);
             printf("Contraseña actualizada exitosamente.\n");
         case 5:
             /*printf("Ingrese el nuevo nombre de asignatura: \n");
@@ -65,9 +68,9 @@ Estudiante actualizarEstudiante(Estudiante estudiante){
             printf("Nombre de asignatura actualizado exitosamente.\n");
             break;*/
         case 6:
-            printf("Ingrese la nueva calificacion de asignatura: \n");
+            /*printf("Ingrese la nueva calificacion de asignatura: \n");
             scanf("%f", &estudiante.asignaturas[0].calificaciones[0]);
-            printf("Calificacion actualizada correctamente\n");
+            printf("Calificacion actualizada correctamente\n");*/
         case 0:
             printf("\nHas salido del menu de crear estudiante\n");
             break;
@@ -75,20 +78,28 @@ Estudiante actualizarEstudiante(Estudiante estudiante){
             break;
         }
     }
-    return estudiante;
+    return estudiantes[tamanoVector];
 }
+
 void mostrarEstudiante(Estudiante estudiante){
     printf("\nID: %d\n", estudiante.id);
     printf("Nombre: %s\n", estudiante.nombre);
     printf("Apellido: %s\n", estudiante.apellido);
     printf("Contrasena: %s\n", estudiante.contrasena);
 }
+
 void eliminarEstudiante();
+
 void mostrarCalificacion();
+
 void generarBoletin();
-void menuEstudiante(){
-    Estudiante estudiante;
+
+void menuEstudiante(Estudiante *estudiantes){
+    int tamanoVector = sizeof(estudiantes)/sizeof(estudiantes[0]);
+    int posicionVector = 0;
     int opcion = 1;
+    int validarId;
+    
     while(opcion != 0){
         printf("\nMenu Estudiante\n");
         printf("1. Crear estudiante\n");
@@ -102,13 +113,34 @@ void menuEstudiante(){
         scanf("%d", &opcion);
         switch (opcion){
             case 1:
+                if(sizeof(estudiantes)/sizeof(estudiantes[0]) == tamanoVector){
+                    estudiantes = malloc((tamanoVector+1) * sizeof(estudiantes));
+                }
+                Estudiante estudiante;
                 estudiante = crearEstudiante();
+                estudiantes[posicionVector] = estudiante;
+                posicionVector++;
+                tamanoVector++;
                 break;
             case 2:
-                estudiante = actualizarEstudiante(estudiante);
+                printf("\nIngrese el ID del estudiante a modificar: ");
+                scanf("%d", &validarId);
+                for(int contador = 0; contador < tamanoVector; contador++){
+                    if(validarId != estudiantes[contador].id){
+                        printf("\nEl ID ingresado no corresponde a ningun estudiante!\n");
+                        return;
+                    }else if(validarId == estudiantes[contador].id){
+                        printf("\nEstudiante encontrado!\n");
+                        printf("%d", contador);
+                        estudiantes[contador] = actualizarEstudiante(estudiantes, contador);
+                    }
+                }
                 break;
             case 3:
-                mostrarEstudiante(estudiante);
+            for (int contador = 0; contador < posicionVector; contador++){
+                printf("\nEstudiante %d:\n", contador);
+                mostrarEstudiante(estudiantes[contador]);
+            }
                 break;
             case 4:
                 //eliminarEstudiante();
