@@ -1,2 +1,2 @@
-Tipo:Admin;ID:1;Nombre:admin;Password:adminpass
-Tipo:Admin;ID:1112793002;Nombre:andres;Password:andres123
+Admin,1,admin,adminpass
+Admin,1112793002,andres,andres123

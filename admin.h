@@ -1,25 +1,25 @@
 #ifndef ADMIN_H
 #define ADMIN_H
+#include "login.h"
 #include "estudiante.h"
 #include "docente.h"
 #include "asignatura.h"
 typedef struct {
-    int id;
-    char nombre[50];
-    char contrasena[50];
-    Estudiante estudiantes[4];
-    Docente docentes[4];
-    Asignatura asignaturas[10];
+    char tipo[10];      // Tipo: Admin, Docente, Estudiante
+    int id;             // ID del usuario
+    char nombre[50];    // Nombre del usuario
+    char contraseña[50]; // Contraseña del usuario
 } Admin;
 
-void menuCrud();
 void menuPrincipalAdmin();
-void menuGestionAdmin();
-void crearAdmin();
+void menuGestiónAdmin();
+Admin crearAdmin();
+void manejarAdmin();
 void mostrarAdmin();
-void actualizarAdmin();
+Admin actualizarAdmin(Admin *admins, int tamañoVector); 
 void eliminarAdmin();
-void cerrarSesion();
+void guardarAdmins(Admin *admins, int tamañoVector);
+void cerrarSesión();
 
 #include <stdio.h>
 #include <string.h>
@@ -27,14 +27,8 @@ void cerrarSesion();
 #include <stdlib.h>
 #include "login.h"
 
-void menuCrud(){
-    printf("1. Crear\n");
-    printf("2. Leer\n");
-    printf("3. Actualizar\n");
-    printf("4. Eliminar\n");
-}
 void menuPrincipalAdmin() {
-    int opcion;
+    int opción;
     do {
         printf("\nMenú Administrador\n");
         printf("1. Gestionar administrador\n");
@@ -42,49 +36,52 @@ void menuPrincipalAdmin() {
         printf("3. Gestionar Estudiante\n");
         printf("4. Gestionar curso\n");
         printf("5. Gestionar asignatura\n");
-        printf("6. Gestionar calificacion\n");
-        printf("7. Cerrar sesion\n");
+        printf("6. Gestionar calificación\n");
+        printf("7. Cerrar sesión\n");
         printf("0. Salir\n");
         printf("Seleccione una opción: ");
-        scanf("%d", &opcion);
+        scanf("%d", &opción);
 
-        switch(opcion) {
+        switch(opción) {
             case 1:
-                menuGestionAdmin();
+                menuGestiónAdmin();
                 break;
             case 7:
-                cerrarSesion();
+                cerrarSesión();
                 break;
             case 0:
                 printf("Saliendo...\n");
-                Sleep(2000);  // Espera 2 segundos (2000 milisegundos) antes de salir y evitar que el usuario se quede con el programa abierto en el sistema, ademas si queremos implementar esto en (linux/mac) el valor se escribe en segundos y no en milisegundos.
+                Sleep(2000);  // Espera 2 segundos 
                 exit(0); // esto cierra (detiene) en su totalidad el programa.
             default:
                 printf("Opción no válida\n");
         }
-    } while(opcion != 0);
+    } while(opción != 0);
 }
-void menuGestionAdmin() {
-    int opcion;
+void menuGestiónAdmin() {
+    int opción;
     do {
-        printf("\nMenú De Gestion De Administradores\n");
-        menuCrud();
+        printf("\nMenú De Gestión De Administradores\n");
+        printf("1. Crear administrador\n");
+        printf("2. Mostrar administrador\n");
+        printf("3. Actualizar administrador\n");
+        printf("4. Eliminar administrador\n");
         printf("0. volver al menú principal\n");
         printf("Seleccione una opción: ");
-        scanf("%d", &opcion);
+        scanf("%d", &opción);
 
-        switch(opcion) {
+        switch(opción) {
             case 1:
-                crearAdmin();
+                //crearAdmin();
                 break;
             case 2:
-                mostrarAdmin();
+                //mostrarAdmin();
                 break;
             case 3:
-                actualizarAdmin();
+                //actualizarAdmin();
                 break;
             case 4:
-                eliminarAdmin();
+                //eliminarAdmin();
                 break;
             case 0:
                 printf("Volviendo al menú principal...\n");
@@ -95,152 +92,120 @@ void menuGestionAdmin() {
                 printf("Opción no válida\n");
                 break;
         }
-    } while(opcion != 0);
+    } while(opción != 0);
 }
 
 // Función para crear un nuevo administrador
-void crearAdmin() {
-    FILE *punteroArchivo = fopen("data/admin.txt", "a");
-    if (punteroArchivo == NULL) {
-        printf("Error al abrir la base de datos\n");
-        return;
-    }
-
+/*Admin crearAdmin(){
+    manejarAgregarPersona(admins, &totalAdmins);
     Admin admin;
+    char tipo[10] = "Admin";
     printf("Ingrese ID del administrador: ");
     scanf("%d", &admin.id);
     printf("Ingrese nombre del administrador: ");
     scanf("%s", admin.nombre);
     printf("Ingrese contraseña del administrador: ");
-    scanf("%s", admin.contrasena);
-
-    fprintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena);
-    fclose(punteroArchivo);
-
+    scanf("%s", admin.contraseña);
     printf("Administrador creado exitosamente.\n");
-}
+    return admin;
+}*/
 
-// Funcion para leer 
-void mostrarAdmin() {
-    FILE *punteroArchivo = fopen("data/admin.txt", "r");
-    if (punteroArchivo == NULL) {
-        printf("Error al abrir la base de datos\n");
+/*void manejarAdmins(Admin admins[], int *totalAdmins) {
+    if (*totalAdmins >= MAX_ADMINS) {
+        printf("No se pueden añadir más registros. Límite alcanzado.\n");
         return;
     }
+    admins[*totalAdmins] = agregarAdmin(); // Llama a la función para obtener una nueva persona
+    (*totalAdmins)++;
+}*/
 
+
+/*void mostrarAdmin() {
+    //cargarAdmins();
     Admin admin;
-    printf("\nLista de administradores:\n");
-    while (fscanf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admin.id, admin.nombre, admin.contrasena) == 3) {
-        printf("ID: %d, Nombre: %s, Contraseña: %s\n", admin.id, admin.nombre, admin.contrasena);
-    }
+    while (scanf(Admin admins[], "%19[^,],%d,%49[^,],%49[^\n]\n", admins[totalAdmins].tipo, &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña) == 4) {
+        printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, Contraseña=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña);
+        totalAdmins++;
+}*/
 
-    fclose(punteroArchivo);
+Admin actualizarAdmin(Admin *admins, int tamañoVector) {
+    int opción = 1;
+    while (opción != 0) {
+        //menuActualizarAdmin();
+        scanf("%d", &opción);
+        switch (opción) {
+            case 1:
+                printf("Ingrese el nuevo ID del administrador: ");
+                scanf("%d", &admins[tamañoVector].id);
+                printf("ID actualizado exitosamente.\n");
+                break;  
+            case 2:
+                printf("Ingrese el nuevo nombre del administrador: ");
+                scanf("%s", admins[tamañoVector].nombre);
+                printf("Nombre actualizado exitosamente.\n");
+                break;
+            case 3:
+                printf("Ingrese la nueva contraseña del administrador: ");
+                scanf("%s", admins[tamañoVector].contraseña);
+                printf("Contraseña actualizada exitosamente.\n");
+                break;
+            case 0:
+                printf("\nHas salido del menu de actualización\n");
+                break;
+            default:
+                printf("Opción no válida\n");
+                break;
+        }
+    }
+    return admins[tamañoVector];
 }
 
-void actualizarAdmin() {
-    FILE *punteroArchivo = fopen("data/admin.txt", "r");
-    if (punteroArchivo == NULL) {
-        printf("Error al abrir la base de datos\n");
-        return;
-    }
-    // Leer todos los administradores en memoria
-    #define MAX_ADMINS 100 // Define un tamaño máximo para el arreglo
-    Admin admins[MAX_ADMINS];
-    int count = 0;
 
-    while (fscanf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admins[count].id, admins[count].nombre, admins[count].contrasena) == 3) {
-        count++;
-    }
-    fclose(punteroArchivo);
+/*void mostrarAdmin(Admin admin){
+    printf("\nID: %d\n", admin.id);
+    printf("Nombre: %s\n", admin.nombre);
+    printf("Contraseña: %s\n", admin.contraseña);
+}*/
 
-    int idBuscado;
-    printf("Ingrese el ID del administrador a actualizar: ");
-    scanf("%d", &idBuscado);
-
-    int encontrado = 0;
-
-    // Actualizar el administrador en memoria
-    for (int i = 0; i < count; i++) {
-        if (admins[i].id == idBuscado) {
-            encontrado = 1;
-            printf("Ingrese nuevo nombre del administrador: ");
-            scanf("%s", admins[i].nombre);
-            printf("Ingrese nueva contraseña del administrador: ");
-            scanf("%s", admins[i].contrasena);
+void eliminarAdmin(Admin *admins, int tamañoVector){
+    int opción = 1;
+    while (opción != 0){
+        //menuEliminarAdmin();
+        scanf("%d", &opción);
+        switch (opción){
+        case 1:
+            printf("Ingrese el ID del administrador a eliminar: ");
+            scanf("%d", &admins[tamañoVector].id);
+            printf("Administrador eliminado exitosamente.\n");
+            break;
+        case 2:
+            printf("Ingrese el ID del administrador a eliminar: ");
+            scanf("%d", &admins[tamañoVector].id);
+            printf("Administrador eliminado exitosamente.\n");
+            break;
+        case 0:
+            printf("\nHas salido del menu de eliminar administrador\n");
+            break;
+        default:
             break;
         }
     }
+}
 
-    if (!encontrado) {
-        printf("Administrador no encontrado.\n");
-        return;
-    }
-
-    // Escribir todos los administradores de nuevo en el archivo
-    punteroArchivo = fopen("data/admin.txt", "w");
+void guardarAdmins(Admin *admins, int totalAdmins) {
+    FILE *punteroArchivo = fopen("data/admin.txt", "w");
     if (punteroArchivo == NULL) {
-        printf("Error al abrir la base de datos para escribir\n");
+        printf("Error al abrir el archivo de administradores para guardar\n");
         return;
     }
 
-    for (int i = 0; i < count; i++) {
-        fprintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admins[i].id, admins[i].nombre, admins[i].contrasena);
+    for (int i = 0; i < totalAdmins; i++) {
+        fprintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admins[i].id, admins[i].nombre, admins[i].contraseña);
     }
 
     fclose(punteroArchivo);
-    printf("Administrador actualizado exitosamente.\n");
-
-    // Mostrar el menú nuevamente
-    menuGestionAdmin(); // Llama a la función del menú para que el usuario pueda continuar
 }
 
-void eliminarAdmin() {
-    FILE *punteroArchivo = fopen("data/admin.txt", "r");
-    if (punteroArchivo == NULL) {
-        printf("Error al abrir la base de datos\n");
-        return;
-    }
-
-    FILE *temp = fopen("data/temp.txt", "w");
-    if (temp == NULL) {
-        printf("Error al crear el archivo temporal\n");
-        fclose(punteroArchivo);
-        return;
-    }
-
-    int idBuscado;
-    printf("Ingrese el ID del administrador a eliminar: ");
-    scanf("%d", &idBuscado);
-
-    Admin admin;
-    int encontrado = 0;
-
-    while (fscanf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%[^;];Password:%[^;\n]\n", &admin.id, admin.nombre, admin.contrasena) == 3) {
-        if (admin.id == idBuscado) {
-            encontrado = 1; // Se encontró el administrador
-            printf("Administrador con ID %d eliminado.\n", admin.id);
-        } else {
-            // Escribir en el archivo temporal si no es el administrador a eliminar
-            fprintf(temp, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admin.id, admin.nombre, admin.contrasena); // Cambiar fprintf por fprintf
-        }
-    }
-
-    fclose(punteroArchivo); 
-    fclose(temp); 
-
-    if (!encontrado) { 
-        printf("Administrador no encontrado.\n"); 
-        remove("data/temp.txt"); // Eliminar el archivo temporal si no se encontró el administrador 
-    } else { 
-        if (remove("data/admin.txt") != 0) { 
-            perror("Error al eliminar el archivo original"); 
-        } else if (rename("data/temp.txt", "data/admin.txt") != 0) { 
-            perror("Error al renombrar el archivo temporal"); 
-        } else { 
-            printf("Archivo actualizado exitosamente.\n"); 
-        }   
-    }
-}
 
 
 #endif
