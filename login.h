@@ -16,6 +16,7 @@ extern int totalAdmins;
 
 // Declaración de funciones
 void saludoBienvenida();
+void menuPrincipal();
 void menuPrincipalAdmin();
 int encontrarTipo(char *usuario, char *contraseña);
 int login(char *usuario, char *contraseña);
@@ -25,6 +26,27 @@ void cerrarSesión();
 // Definición de las funciones
 void saludoBienvenida() {
     printf("\n-----Bienvenido a CalifiC-----\n");
+}
+
+void menuPrincipal() {
+    saludoBienvenida();
+    printf("1. Iniciar Sesión\n");
+    printf("0. Salir\n");
+    printf("Seleccione una opción: ");
+    int opción;
+    scanf("%d", &opción);
+
+    switch (opción) {
+        case 1:
+        manejarLogin();
+        break;
+        case 0:
+        cerrarSesión();
+        break;
+        default:
+        printf("Opción no válida\n");
+        break;
+    }
 }
 
 // Similar para docentes y estudiantes
@@ -68,9 +90,8 @@ int encontrarTipo(char *usuario, char *contraseña) {
 void cerrarSesión() {
     printf("Cerrando sesión...\n");
     Sleep(2000);
-    saludoBienvenida();
+    menuPrincipal();
     // Aquí puedes agregar cualquier limpieza adicional si es necesario
-    manejarLogin();
 }
 
 #endif // LOGIN_H

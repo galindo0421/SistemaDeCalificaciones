@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
 #include "admin.h"
 #include "login.h"
 
@@ -17,10 +16,9 @@ int totalAdmins = 0; // Variables globales
 void cargarAdmins();
 void cargarDatos();
 
-int main(){
-    saludoBienvenida();  // Llamar a la función de bienvenida
+int main(){  
     cargarDatos();       // Cargar los datos desde los archivos
-    manejarLogin();      // Llamar a la función que maneja el login
+    menuPrincipal();      // Llamar a la función de menu principal
     return 0;
 }
 
@@ -28,7 +26,7 @@ int main(){
 void cargarAdmins() {
     FILE *archivoAdmins = fopen("data/admin.txt", "r");
     if (archivoAdmins == NULL) {
-        printf("Error al abrir el archivo admin.txt: %s\n", strerror(errno));
+        printf("Error al abrir el archivo admin.txt\n");
         return;
     }
 
@@ -36,7 +34,6 @@ void cargarAdmins() {
 
     // Lee cada línea del archivo con el formato separado por comas
     while (fscanf(archivoAdmins, "%19[^,],%d,%49[^,],%49[^\n]\n", admins[totalAdmins].tipo, &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña) == 4) {
-        printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, Contraseña=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña);
         totalAdmins++;
 
         // Verifica si se alcanzó el límite de administradores
@@ -46,8 +43,8 @@ void cargarAdmins() {
         }
     }
 
+    printf("Administradores cargados correctamente.\n");
     fclose(archivoAdmins);
-    printf("Total de admins cargados: %d\n", totalAdmins);
 }
 
 
@@ -57,6 +54,9 @@ void cargarDatos() {
     cargarAdmins();  // Cargar admins desde archivo
     printf("Datos cargados:\n");
     printf("Admins: %d\n", totalAdmins);
+    for (int i = 0; i < totalAdmins; i++) {
+        printf("%s\n", admins[i].nombre);
+    }
 }
 
 // Función login para comparar usuario y contraseña

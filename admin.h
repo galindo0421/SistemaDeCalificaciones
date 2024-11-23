@@ -11,6 +11,8 @@ typedef struct {
     char contraseña[50]; // Contraseña del usuario
 } Admin;
 
+//printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, Contraseña=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña); este print lee los datos del archivo y lo imprime en la consola.
+
 void menuPrincipalAdmin();
 void menuGestiónAdmin();
 Admin crearAdmin();
@@ -200,7 +202,7 @@ void guardarAdmins(Admin *admins, int totalAdmins) {
     }
 
     for (int i = 0; i < totalAdmins; i++) {
-        fprintf(punteroArchivo, "Tipo:Admin;ID:%d;Nombre:%s;Password:%s\n", admins[i].id, admins[i].nombre, admins[i].contraseña);
+        fprintf(punteroArchivo, "Admin,%d,%s,%s\n", admins[i].id, admins[i].nombre, admins[i].contraseña);
     }
 
     fclose(punteroArchivo);
