@@ -6,6 +6,16 @@
 #include <windows.h>
 
 
+#define MAXADMINS 10
+#define MAXESTUDIANTES 10
+#define MAXDOCENTES 10
+#define MAXASIGNATURAS 10
+#define MAXCALIFICACIONES 10
+
+//macros
+#define TAMANOVECTOR(vector) sizeof(vector)/sizeof(vector[0])
+
+
 void salir();
 
 void salir() {

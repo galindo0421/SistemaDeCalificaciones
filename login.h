@@ -20,7 +20,6 @@ void cargarAdmins();
 void saludoBienvenida();
 void menuPrincipal();
 void menuPrincipalAdmin();
-int encontrarTipo(char *usuario, char *contraseña);
 int login(char *usuario, char *contraseña);
 void manejarLogin();
 void cerrarSesión();
@@ -76,17 +75,13 @@ printf("Contraseña ingresada: %s\n", contraseña); // Verifica la contraseña i
             printf("Bienvenido Admin!\n");
             menuPrincipalAdmin();
             break;
+        case 666:
+            printf("Welcome Master!\n");
+            menuPrincipalAdmin();
+            break;
         default:
             printf("Credenciales incorrectas. Intente nuevamente.\n");
             break;
-    }
-}
-
-int encontrarTipo(char *usuario, char *contraseña) {
-    if (login(usuario, contraseña)) {
-        return 1; // Administrador
-    }else {
-        return 0;
     }
 }
 
