@@ -1,12 +1,17 @@
 #ifndef UTILIDADES_H
 #define UTILIDADES_H
 
-//Constantes:
-const int MAXESTUDIANTES = 10;
-const int MAXDOCENTES = 10;
-const int MAXASIGNATURAS = 10;
-const int MAXCALIFICACIONES = 10;
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
 
 
+void salir();
+
+void salir() {
+    printf("Saliendo...\n");
+    Sleep(2000);  // Espera 2 segundos 
+    exit(0); // esto cierra (detiene) en su totalidad el programa.
+}
 
 #endif

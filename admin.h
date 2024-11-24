@@ -11,8 +11,11 @@ typedef struct {
     char contraseña[50]; // Contraseña del usuario
 } Admin;
 
-//printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, Contraseña=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña); este print lee los datos del archivo y lo imprime en la consola.
+Admin admins[MAX_ADMINS]; 
+extern int totalAdmins;
 
+//printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, Contraseña=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña); este print lee los datos del archivo y lo imprime en la consola.
+void cargarAdmins();
 void menuPrincipalAdmin();
 void menuGestiónAdmin();
 Admin crearAdmin();
@@ -29,6 +32,31 @@ void cerrarSesión();
 #include <stdlib.h>
 #include "login.h"
 
+// Función para cargar los datos de los administradores desde el archivo
+void cargarAdmins() {
+    FILE *archivoAdmins = fopen("data/admin.txt", "r");
+    if (archivoAdmins == NULL) {
+        printf("Error al abrir el archivo admin.txt\n");
+        return;
+    }
+
+    totalAdmins = 0; // Reinicia el contador de administradores
+
+    // Lee cada línea del archivo con el formato separado por comas
+    while (fscanf(archivoAdmins, "%19[^,],%d,%49[^,],%49[^\n]\n", admins[totalAdmins].tipo, &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña) == 4) {
+        totalAdmins++;
+
+        // Verifica si se alcanzó el límite de administradores
+        if (totalAdmins >= MAX_ADMINS) {
+            printf("Límite de admins alcanzado. Aumenta el tamaño de MAX_ADMINS.\n");
+            break;
+        }
+    }
+
+    printf("Administradores cargados correctamente.\n");
+    fclose(archivoAdmins);
+}
+
 void menuPrincipalAdmin() {
     int opción;
     do {
@@ -36,10 +64,9 @@ void menuPrincipalAdmin() {
         printf("1. Gestionar administrador\n");
         printf("2. Gestionar docente\n");
         printf("3. Gestionar Estudiante\n");
-        printf("4. Gestionar curso\n");
-        printf("5. Gestionar asignatura\n");
-        printf("6. Gestionar calificación\n");
-        printf("7. Cerrar sesión\n");
+        printf("4. Gestionar asignatura\n");
+        printf("5. Gestionar calificación\n");
+        printf("6. Cerrar sesión\n");
         printf("0. Salir\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opción);
@@ -48,13 +75,12 @@ void menuPrincipalAdmin() {
             case 1:
                 menuGestiónAdmin();
                 break;
-            case 7:
+            case 6:
                 cerrarSesión();
                 break;
             case 0:
-                printf("Saliendo...\n");
-                Sleep(2000);  // Espera 2 segundos 
-                exit(0); // esto cierra (detiene) en su totalidad el programa.
+                salir();
+                break;
             default:
                 printf("Opción no válida\n");
         }
@@ -99,7 +125,6 @@ void menuGestiónAdmin() {
 
 // Función para crear un nuevo administrador
 /*Admin crearAdmin(){
-    manejarAgregarPersona(admins, &totalAdmins);
     Admin admin;
     char tipo[10] = "Admin";
     printf("Ingrese ID del administrador: ");
@@ -111,16 +136,6 @@ void menuGestiónAdmin() {
     printf("Administrador creado exitosamente.\n");
     return admin;
 }*/
-
-/*void manejarAdmins(Admin admins[], int *totalAdmins) {
-    if (*totalAdmins >= MAX_ADMINS) {
-        printf("No se pueden añadir más registros. Límite alcanzado.\n");
-        return;
-    }
-    admins[*totalAdmins] = agregarAdmin(); // Llama a la función para obtener una nueva persona
-    (*totalAdmins)++;
-}*/
-
 
 /*void mostrarAdmin() {
     //cargarAdmins();
@@ -195,14 +210,14 @@ void eliminarAdmin(Admin *admins, int tamañoVector){
 }
 
 void guardarAdmins(Admin *admins, int totalAdmins) {
-    FILE *punteroArchivo = fopen("data/admin.txt", "w");
+    FILE *punteroArchivo = fopen("data/admin.txt", "a+");
     if (punteroArchivo == NULL) {
         printf("Error al abrir el archivo de administradores para guardar\n");
         return;
     }
 
     for (int i = 0; i < totalAdmins; i++) {
-        fprintf(punteroArchivo, "Admin,%d,%s,%s\n", admins[i].id, admins[i].nombre, admins[i].contraseña);
+        fprintf(punteroArchivo, "%s,%d,%s,%s\n", admins[i].tipo, admins[i].id, admins[i].nombre, admins[i].contraseña);
     }
 
     fclose(punteroArchivo);

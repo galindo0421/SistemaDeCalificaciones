@@ -8,7 +8,6 @@
 #define MAX_ESTUDIANTES 100
 #define MAX_ASIGNATURAS 100
 
-Admin admins[MAX_ADMINS];
 
 int totalAdmins = 0; // Variables globales
 
@@ -22,32 +21,73 @@ int main(){
     return 0;
 }
 
-// Función para cargar los datos de los administradores desde el archivo
-void cargarAdmins() {
-    FILE *archivoAdmins = fopen("data/admin.txt", "r");
-    if (archivoAdmins == NULL) {
-        printf("Error al abrir el archivo admin.txt\n");
-        return;
-    }
+// void cargarDocentes() {
+//     FILE *archivoDocentes = fopen("data/docente.txt", "r");
+//     if (archivoDocentes == NULL) {
+//         printf("Error al abrir el archivo docente.txt\n");
+//         return;
+//     }
 
-    totalAdmins = 0; // Reinicia el contador de administradores
+//     totalDocentes = 0; // Reinicia el contador de docentes
 
-    // Lee cada línea del archivo con el formato separado por comas
-    while (fscanf(archivoAdmins, "%19[^,],%d,%49[^,],%49[^\n]\n", admins[totalAdmins].tipo, &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña) == 4) {
-        totalAdmins++;
+//     // Lee cada línea del archivo con el formato separado por comas
+//     while (fscanf(archivoDocentes, "%19[^,],%d,%49[^,],%49[^\n]\n", docentes[totalDocentes].tipo, &docentes[totalDocentes].id, docentes[totalDocentes].nombre, docentes[totalDocentes].contraseña) == 4) {
+//         totalDocentes++;
 
-        // Verifica si se alcanzó el límite de administradores
-        if (totalAdmins >= MAX_ADMINS) {
-            printf("Límite de admins alcanzado. Aumenta el tamaño de MAX_ADMINS.\n");
-            break;
+//         // Verifica si se alcanzó el límite de docentes
+//         if (totalDocentes >= MAX_DOCENTES) {
+//             printf("Límite de docentes alcanzado. Aumenta el tamaño de MAX_DOCENTES.\n");
+//             break;
+//         }
+//     }
+    
+//     printf("Docentes cargados correctamente.\n");
+//     fclose(archivoDocentes);
+// }
+
+// void cargarEstudiantes() {
+//     FILE *archivoEstudiantes = fopen("data/estudiante.txt", "r");
+//     if (archivoEstudiantes == NULL) {
+//         printf("Error al abrir el archivo estudiante.txt\n");
+//         return;
+//     }
+
+//     totalEstudiantes = 0; // Reinicia el contador de estudiantes
+
+//     // Lee cada línea del archivo con el formato separado por comas
+//     while (fscanf(archivoEstudiantes, "%19[^,],%d,%49[^,],%49[^\n]\n", estudiantes[totalEstudiantes].tipo, &estudiantes[totalEstudiantes].id, estudiantes[totalEstudiantes].nombre, estudiantes[totalEstudiantes].contraseña) == 4) {
+//         totalEstudiantes++;
+
+//         // Verifica si se alcanzó el límite de estudiantes
+//         if (totalEstudiantes >= MAX_ESTUDIANTES) {
+//             printf("Límite de estudiantes alcanzado. Aumenta el tamaño de MAX_ESTUDIANTES.\n");
+//             break;
+//         }
+//     }
+
+//     printf("Estudiantes cargados correctamente.\n");
+//     fclose(archivoEstudiantes);
+// }
+
+// Función login para comparar usuario y contraseña
+int login(char *usuario, char *contraseña) {
+    for (int contador = 0; contador < totalAdmins; contador++) {
+        if (strcmp(admins[contador].nombre, usuario) == 0 && strcmp(admins[contador].contraseña, contraseña) == 0) {
+            return 1; // Si el usuario y la contraseña coinciden
         }
     }
-
-    printf("Administradores cargados correctamente.\n");
-    fclose(archivoAdmins);
+    // for (int contador = 0; contador < totalDocentes; contador++) {
+    //     if (strcmp(docentes[contador].nombre, usuario) == 0 && strcmp(docentes[contador].contraseña, contraseña) == 0) {
+    //         return 2; // Si el usuario y la contraseña coinciden
+    //     }
+    // }
+    // for (int contador = 0; contador < totalEstudiantes; contador++) {
+    //     if (strcmp(estudiantes[contador].nombre, usuario) == 0 && strcmp(estudiantes[contador].contraseña, contraseña) == 0) {
+    //         return 3; // Si el usuario y la contraseña coinciden
+    //     }
+    // }
+    return 0; // Si el usuario y la contraseña no coinciden
 }
-
-
 
 // Función para cargar todos los datos (admin, docente, estudiante, etc.)
 void cargarDatos() {
@@ -58,14 +98,3 @@ void cargarDatos() {
         printf("%s\n", admins[i].nombre);
     }
 }
-
-// Función login para comparar usuario y contraseña
-int login(char *usuario, char *contraseña) {
-    for (int contador = 0; contador < totalAdmins; contador++) {
-        if (strcmp(admins[contador].nombre, usuario) == 0 && strcmp(admins[contador].contraseña, contraseña) == 0) {
-            return 1; // Si el usuario y la contraseña coinciden
-        }
-    }
-    return 0; // Si no hay coincidencia
-}
-

@@ -9,12 +9,14 @@
 #include "admin.h"
 #include "docente.h"
 #include "estudiante.h"
+#include "utilidades.h"
 
 #define MAX_ADMINS 100 // Definir tamaño de los arreglos
 
 extern int totalAdmins;
 
 // Declaración de funciones
+void cargarAdmins();
 void saludoBienvenida();
 void menuPrincipal();
 void menuPrincipalAdmin();
@@ -22,6 +24,7 @@ int encontrarTipo(char *usuario, char *contraseña);
 int login(char *usuario, char *contraseña);
 void manejarLogin();
 void cerrarSesión();
+void salir();
 
 // Definición de las funciones
 void saludoBienvenida() {
@@ -41,7 +44,7 @@ void menuPrincipal() {
         manejarLogin();
         break;
         case 0:
-        cerrarSesión();
+        salir();
         break;
         default:
         printf("Opción no válida\n");
@@ -56,7 +59,7 @@ void manejarLogin() {
     char contraseña[50]; 
     int tipoUsuario; 
 
-    printf("Ingrese su usuario:\n"); 
+    printf("\nIngrese su usuario:\n"); 
     scanf("%s", usuario); 
     printf("Ingrese su contraseña:\n"); 
     scanf("%s", contraseña); 
