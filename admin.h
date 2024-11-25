@@ -8,25 +8,25 @@
 typedef struct {
     int id;             // ID del usuario
     char nombre[50];    // Nombre del usuario
-    char contraseña[50]; // Contraseña del usuario
+    char contrasena[50]; // contrasena del usuario
 } Admin;
 
 
 extern int totalAdmins;
 Admin admins[MAXADMINS]; 
 
-//printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, Contraseña=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña); este print lee los datos del archivo y lo imprime en la consola.
+//printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, contrasena=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contrasena); este print lee los datos del archivo y lo imprime en la consola.
 void cargarAdmins();
 void menuPrincipalAdmin();
-void menuGestiónAdmin();
+void menuGestionAdmin();
 void menuPrincipalEstudiante();
 Admin crearAdmin();
 void manejarAdmin();
 void mostrarAdmin();
-Admin actualizarAdmin(Admin *admins, int tamañoVector); 
+Admin actualizarAdmin(Admin *admins, int tamanoVector); 
 void eliminarAdmin();
-void guardarAdmins(Admin *admins, int tamañoVector);
-void cerrarSesión();
+void guardarAdmins(Admin *admins, int tamanoVector);
+void cerrarSesion();
 
 #include <stdio.h>
 #include <string.h>
@@ -45,7 +45,7 @@ void cargarAdmins() {
     totalAdmins = 0; // Reinicia el contador de administradores
 
     // Lee cada línea del archivo con el formato separado por comas
-    while (fscanf(archivoAdmins, "%d,%49[^,],%49[^\n]\n", &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña) == 3) {
+    while (fscanf(archivoAdmins, "%d,%49[^,],%49[^\n]\n", &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contrasena) == 3) {
         totalAdmins++;
 
         // Verifica si se alcanzó el límite de administradores
@@ -60,7 +60,7 @@ void cargarAdmins() {
 }
 
 void menuPrincipalAdmin() {
-    int opción;
+    int opcion;
     do {
         printf("\nMenú Administrador\n");
         printf("1. Gestionar administrador\n");
@@ -70,29 +70,29 @@ void menuPrincipalAdmin() {
         printf("5. Gestionar calificación\n");
         printf("6. Cerrar sesión\n");
         printf("0. Salir\n");
-        printf("Seleccione una opción: ");
-        scanf("%d", &opción);
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
 
-        switch(opción) {
+        switch(opcion) {
             case 1:
-                menuGestiónAdmin();
+                menuGestionAdmin();
                 break;
             case 3:
                 menuPrincipalEstudiante();
                 break;
             case 6:
-                cerrarSesión();
+                cerrarSesion();
                 break;
             case 0:
                 salir();
                 break;
             default:
-                printf("Opción no válida\n");
+                printf("opcion no válida\n");
         }
-    } while(opción != 0);
+    } while(opcion != 0);
 }
-void menuGestiónAdmin() {
-    int opción;
+void menuGestionAdmin() {
+    int opcion;
     do {
         printf("\nMenú De Gestión De Administradores\n");
         printf("1. Crear administrador\n");
@@ -100,10 +100,10 @@ void menuGestiónAdmin() {
         printf("3. Actualizar administrador\n");
         printf("4. Eliminar administrador\n");
         printf("0. volver al menú principal\n");
-        printf("Seleccione una opción: ");
-        scanf("%d", &opción);
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
 
-        switch(opción) {
+        switch(opcion) {
             case 1:
                 if (totalAdmins < MAXADMINS) {
                     Admin admin = crearAdmin();
@@ -130,10 +130,10 @@ void menuGestiónAdmin() {
                 menuPrincipalAdmin();
                 break;
             default:
-                printf("Opción no válida\n");
+                printf("opcion no válida\n");
                 break;
         }
-    } while(opción != 0);
+    } while(opcion != 0);
 }
 
 // Función para crear un nuevo administrador
@@ -143,8 +143,8 @@ Admin crearAdmin(){
     scanf("%d", &admin.id);
     printf("Ingrese nombre del administrador: ");
     scanf("%s", admin.nombre);
-    printf("Ingrese contraseña del administrador: ");
-    scanf("%s", admin.contraseña);
+    printf("Ingrese contrasena del administrador: ");
+    scanf("%s", admin.contrasena);
     printf("Administrador creado exitosamente.\n");
     return admin;
 }
@@ -152,64 +152,64 @@ Admin crearAdmin(){
 /*void mostrarAdmin() {
     //cargarAdmins();
     Admin admin;
-    while (scanf(Admin admins[], "%19[^,],%d,%49[^,],%49[^\n]\n", admins[totalAdmins].tipo, &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña) == 4) {
-        printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, Contraseña=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contraseña);
+    while (scanf(Admin admins[], "%19[^,],%d,%49[^,],%49[^\n]\n", admins[totalAdmins].tipo, &admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contrasena) == 4) {
+        printf("Admin leído: Tipo=%s, ID=%d, Nombre=%s, contrasena=%s\n", admins[totalAdmins].tipo, admins[totalAdmins].id, admins[totalAdmins].nombre, admins[totalAdmins].contrasena);
         totalAdmins++;
 }*/
 
-Admin actualizarAdmin(Admin *admins, int tamañoVector) {
-    int opción = 1;
-    while (opción != 0) {
+Admin actualizarAdmin(Admin *admins, int tamanoVector) {
+    int opcion = 1;
+    while (opcion != 0) {
         //menuActualizarAdmin();
-        scanf("%d", &opción);
-        switch (opción) {
+        scanf("%d", &opcion);
+        switch (opcion) {
             case 1:
                 printf("Ingrese el nuevo ID del administrador: ");
-                scanf("%d", &admins[tamañoVector].id);
+                scanf("%d", &admins[tamanoVector].id);
                 printf("ID actualizado exitosamente.\n");
                 break;  
             case 2:
                 printf("Ingrese el nuevo nombre del administrador: ");
-                scanf("%s", admins[tamañoVector].nombre);
+                scanf("%s", admins[tamanoVector].nombre);
                 printf("Nombre actualizado exitosamente.\n");
                 break;
             case 3:
-                printf("Ingrese la nueva contraseña del administrador: ");
-                scanf("%s", admins[tamañoVector].contraseña);
-                printf("Contraseña actualizada exitosamente.\n");
+                printf("Ingrese la nueva contrasena del administrador: ");
+                scanf("%s", admins[tamanoVector].contrasena);
+                printf("contrasena actualizada exitosamente.\n");
                 break;
             case 0:
                 printf("\nHas salido del menu de actualización\n");
                 break;
             default:
-                printf("Opción no válida\n");
+                printf("opcion no válida\n");
                 break;
         }
     }
-    return admins[tamañoVector];
+    return admins[tamanoVector];
 }
 
 
 /*void mostrarAdmin(Admin admin){
     printf("\nID: %d\n", admin.id);
     printf("Nombre: %s\n", admin.nombre);
-    printf("Contraseña: %s\n", admin.contraseña);
+    printf("contrasena: %s\n", admin.contrasena);
 }*/
 
-void eliminarAdmin(Admin *admins, int tamañoVector){
-    int opción = 1;
-    while (opción != 0){
+void eliminarAdmin(Admin *admins, int tamanoVector){
+    int opcion = 1;
+    while (opcion != 0){
         //menuEliminarAdmin();
-        scanf("%d", &opción);
-        switch (opción){
+        scanf("%d", &opcion);
+        switch (opcion){
         case 1:
             printf("Ingrese el ID del administrador a eliminar: ");
-            scanf("%d", &admins[tamañoVector].id);
+            scanf("%d", &admins[tamanoVector].id);
             printf("Administrador eliminado exitosamente.\n");
             break;
         case 2:
             printf("Ingrese el ID del administrador a eliminar: ");
-            scanf("%d", &admins[tamañoVector].id);
+            scanf("%d", &admins[tamanoVector].id);
             printf("Administrador eliminado exitosamente.\n");
             break;
         case 0:
@@ -229,7 +229,7 @@ void guardarAdmins(Admin *admins, int totalAdmins) {
     }
 
     for (int i = 0; i < totalAdmins; i++) {
-        fprintf(punteroArchivo, "%d,%s,%s\n", admins[i].id, admins[i].nombre, admins[i].contraseña);
+        fprintf(punteroArchivo, "%d,%s,%s\n", admins[i].id, admins[i].nombre, admins[i].contrasena);
     }
 
     fclose(punteroArchivo);
