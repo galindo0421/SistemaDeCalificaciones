@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include "utilidades.h"
 #include "admin.h"
-//#include "login.h"
 #include "estudiante.h"
 
 
