@@ -1,6 +1,5 @@
 #ifndef ADMIN_H
 #define ADMIN_H
-#include "login.h"
 #include "utilidades.h"
 #include "estudiante.h"
 #include "docente.h"
@@ -32,7 +31,6 @@ void cerrarSesion();
 #include <string.h>
 #include <windows.h>
 #include <stdlib.h>
-#include "login.h"
 
 // Función para cargar los datos de los administradores desde el archivo
 void cargarAdmins() {
