@@ -6,7 +6,6 @@
 #include "docente.h"
 #include "asignatura.h"
 typedef struct {
-    char tipo[10];      // Tipo: Admin, Docente, Estudiante
     int id;             // ID del usuario
     char nombre[50];    // Nombre del usuario
     char contraseña[50]; // Contraseña del usuario

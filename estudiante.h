@@ -102,8 +102,7 @@ void guardararchivoEstudiantes(Estudiante *estudiantes, int tamanoVectorEstudian
 void leerArchvivosEstudiantes(Estudiante *estudiantes, int *tamanoVectorEstudiantes) {
     FILE *archivoEstudiantes = fopen("data/estudiantes.bat", "rb"); // Lee el archivo en binario
     if (archivoEstudiantes == NULL) {
-        perror("Error al abrir el archivo de estudiantes");
-        exit(EXIT_FAILURE);
+        archivoEstudiantes = fopen("data/estudiantes.txt", "wb"); // Lee el archivo en texto
     }
 
     *tamanoVectorEstudiantes = 0; // Inicializa el contador

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "utilidades.h"
 #include "admin.h"
 #include "login.h"
@@ -69,11 +70,11 @@ int main(){
 
 // Función login para comparar usuario y contraseña
 int login(char *usuario, char *contraseña) {
-    if (strcmp(usuario, "admin") == 0 && strcmp(contraseña, "admin") == 0){
+    if (strcmp(usuario, "admin") == true && strcmp(contraseña, "admin") == true){
         return 666; // Si el usuario y la contraseña coinciden
     }else{
         for (int contador = 0; contador < totalAdmins; contador++){
-            if (strcmp(admins[contador].nombre, usuario) == 0 && strcmp(admins[contador].contraseña, contraseña) == 0){
+            if (strcmp(admins[contador].nombre, usuario) == true && strcmp(admins[contador].contraseña, contraseña) == true){
                 return 1; // Si el usuario y la contraseña coinciden
             }
         }
@@ -82,7 +83,7 @@ int login(char *usuario, char *contraseña) {
         //         return 2; // Si el usuario y la contraseña coinciden
         //     }
         // }
-        // for (int contador = 0; contador < totalEstudiantes; contador++) {
+        // for (int contador = 0; contador < tamanoVectorEstudiantes; contador++) {
         //     if (strcmp(estudiantes[contador].nombre, usuario) == 0 && strcmp(estudiantes[contador].contraseña, contraseña) == 0) {
         //         return 3; // Si el usuario y la contraseña coinciden
         //     }
