@@ -34,7 +34,7 @@ Menu mostrarMenuPrincipal() {
             menuPrincipalAdmin();
             break;
         case MenuPrincipalDocente:
-            printf("Función para Docente no implementada.\n");
+            menuPrincipalDocente();
             break;
         case MenuPrincipalEstudiante:
             menuPrincipalEstudiante();
