@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include "admin.h"
+#include "estudiante.h"
 
 
 #define MAXADMINS 10

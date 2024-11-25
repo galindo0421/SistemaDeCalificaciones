@@ -68,7 +68,7 @@ void menuPrincipalAdmin() {
         printf("3. Gestionar Estudiante\n");
         printf("4. Gestionar asignatura\n");
         printf("5. Gestionar calificación\n");
-        printf("6. Cerrar sesión\n");
+        printf("6. Volver al menú principal\n");
         printf("0. Salir\n");
         printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
@@ -81,7 +81,7 @@ void menuPrincipalAdmin() {
                 menuPrincipalEstudiante();
                 break;
             case 6:
-                cerrarSesion();
+                //cerrarSesion();
                 break;
             case 0:
                 salir();
