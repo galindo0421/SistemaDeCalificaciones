@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
 #include <windows.h>
 #include <stdlib.h>
 #include "admin.h"
@@ -18,7 +17,7 @@ typedef enum {
 } Menu;
 
 // Implementación del menú principal
-Menu mostrarMenuPrincipal() {
+Menu menuPrincipal() {
     Menu opcion;
 
     printf("\n-----Bienvenido a CalifiC-----\n");
