@@ -20,9 +20,9 @@ void cargarAdmins();
 void saludoBienvenida();
 void menuPrincipal();
 void menuPrincipalAdmin();
-int login(char *usuario, char *contraseña);
+int login(char *usuario, char *contrasena);
 void manejarLogin();
-void cerrarSesión();
+void cerrarSesion();
 void salir();
 
 // Definición de las funciones
@@ -34,11 +34,11 @@ void menuPrincipal() {
     saludoBienvenida();
     printf("1. Iniciar Sesión\n");
     printf("0. Salir\n");
-    printf("Seleccione una opción: ");
-    int opción;
-    scanf("%d", &opción);
+    printf("Seleccione una opcion: ");
+    int opcion;
+    scanf("%d", &opcion);
 
-    switch (opción) {
+    switch (opcion) {
         case 1:
         manejarLogin();
         break;
@@ -46,7 +46,7 @@ void menuPrincipal() {
         salir();
         break;
         default:
-        printf("Opción no válida\n");
+        printf("opcion no válida\n");
         break;
     }
 }
@@ -55,19 +55,19 @@ void menuPrincipal() {
 
 void manejarLogin() { 
     char usuario[50]; 
-    char contraseña[50]; 
+    char contrasena[50]; 
     int tipoUsuario; 
 
     printf("\nIngrese su usuario:\n"); 
     scanf("%s", usuario); 
-    printf("Ingrese su contraseña:\n"); 
-    scanf("%s", contraseña); 
+    printf("Ingrese su contrasena:\n"); 
+    scanf("%s", contrasena); 
 
-    tipoUsuario = login(usuario, contraseña);
+    tipoUsuario = login(usuario, contrasena);
 
     // En la función manejarLogin
 printf("Usuario ingresado: %s\n", usuario); // Verifica el nombre ingresado
-printf("Contraseña ingresada: %s\n", contraseña); // Verifica la contraseña ingresada
+printf("contrasena ingresada: %s\n", contrasena); // Verifica la contrasena ingresada
 
 
     switch (tipoUsuario) {
@@ -85,7 +85,7 @@ printf("Contraseña ingresada: %s\n", contraseña); // Verifica la contraseña i
     }
 }
 
-void cerrarSesión() {
+void cerrarSesion() {
     printf("Cerrando sesión...\n");
     Sleep(2000);
     menuPrincipal();
