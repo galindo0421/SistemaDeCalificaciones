@@ -6,19 +6,16 @@
 #include "admin.h"
 #include "estudiante.h"
 
-
-
 Menu option;
 int totalAdmins = 0; // Variables globales
 
 // Declaración de funciones
-Menu mostrarMenuPrincipal();
+Menu menuPrincipal();
 
 int main(){  
-   option = mostrarMenuPrincipal(); // Llamar a la función de menu principal
+    option = menuPrincipal(); // Llamar a la función de menu principal
     return 0;
 }
-
 
 
 
