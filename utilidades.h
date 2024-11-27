@@ -14,8 +14,12 @@
 #define MAXCALIFICACIONES 10
 
 //macros
-#define TAMANOVECTOR(vector) sizeof(vector)/sizeof(vector[0])
+#define FILE_ERROR(mensaje) fprintf(stderr, "Error: %s\n", mensaje); exit(EXIT_FAILURE)
 
+// Uso:
+// if (fopen("archivo.txt", "r") == NULL) {
+//     ERROR("No se pudo abrir el archivo");
+// }
 
 void salir();
 

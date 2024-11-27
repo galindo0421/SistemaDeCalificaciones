@@ -68,22 +68,22 @@ Estudiante actualizarEstudiante(Estudiante *estudiantes, int tamanoVector){
         scanf("%d", &opcion);
         switch (opcion){
         case 1:
-            printf("Ingrese el nuevo ID de estudiante:");
+            printf("Ingrese el nuevo ID de estudiante: ");
             scanf("%d", &estudiantes[tamanoVector].id);
             printf("ID actualizado exitosamente.\n");
             break;  
         case 2:
-            printf("Ingrese el nuevo nombre del estudiante:");
+            printf("Ingrese el nuevo nombre del estudiante: ");
             scanf("%s", estudiantes[tamanoVector].nombre);
             printf("Nombre actualizado exitosamente.\n");
             break;
         case 3:
-            printf("Ingrese el nuevo apellido del estudiante:");
+            printf("Ingrese el nuevo apellido del estudiante: ");
             scanf("%s", estudiantes[tamanoVector].apellido);
             printf("Apellido actualizado exitosamente.\n");
             break;
         case 4:
-            printf("Ingrese la nueva contraseña del estudiante:");
+            printf("Ingrese la nueva contraseña del estudiante: ");
             scanf("%s", estudiantes[tamanoVector].contrasena);
             printf("Contraseña actualizada exitosamente.\n");
             break;
@@ -100,6 +100,7 @@ Estudiante actualizarEstudiante(Estudiante *estudiantes, int tamanoVector){
             printf("\nHas salido del menu de crear estudiante\n");
             break;
         default:
+            printf("\nOpcion no válida\n");
             break;
         }
     }
@@ -108,31 +109,29 @@ Estudiante actualizarEstudiante(Estudiante *estudiantes, int tamanoVector){
 }
 
 void guardararchivoEstudiantes(Estudiante *estudiantes, int tamanoVectorEstudiantes){
-    FILE *archivoEstudiantesEstudiantes = fopen("data/estudiantes.bat", "wb"); //Modifica todo el archivoEstudiantes en binario, cargando y actualizando todo el vector
-    if(archivoEstudiantesEstudiantes == NULL){
-        perror("Error al abrir el archivoEstudiantes");
-        exit(EXIT_FAILURE);
+    FILE *archivoEstudiantes = fopen("data/estudiantes.bat", "wb"); //Modifica todo el archivoEstudiantes en binario, cargando y actualizando todo el vector
+    if(archivoEstudiantes == NULL){
+        FILE_ERROR("Error al crear el archivo de estudiantes");// Retorna un código de error
     }
-    fwrite(estudiantes, sizeof(Estudiante), tamanoVectorEstudiantes, archivoEstudiantesEstudiantes);
-    fclose(archivoEstudiantesEstudiantes);
+    fwrite(estudiantes, sizeof(Estudiante), tamanoVectorEstudiantes, archivoEstudiantes);
+    fclose(archivoEstudiantes);
 }
 
 void leerArchvivosEstudiantes(Estudiante *estudiantes, int *tamanoVectorEstudiantes){
     // Lee el archivo estudiantes en binario
     FILE *archivoEstudiantes = fopen("data/estudiantes.bat", "rb");
     //Evaluamos si no está creado 
-    if (archivoEstudiantes == NULL) {
-        // En caso que no esté creado, lo creamos de tipo binario
-        archivoEstudiantes = fopen("data/estudiantes.bat", "wb"); 
-        // Validamos nuevamente que esté creado
-        if (archivoEstudiantes == NULL) {
-            perror("Error al crear el archivo de estudiantes");
-            exit(EXIT_FAILURE); // Retorna un código de error
+    if (archivoEstudiantes == NULL){
+         // En caso que no esté creado, lo creamos de tipo binario
+         archivoEstudiantes = fopen("data/estudiantes.bat", "wb"); 
+         // Validamos nuevamente que esté creado
+        if (archivoEstudiantes == NULL){
+            FILE_ERROR("Error al crear el archivo de estudiantes"); // Retorna un código de error
         }
-        // Inicializa el tamaño del vector de estudiantes
-        *tamanoVectorEstudiantes = 0; // No hay estudiantes aún
-        fclose(archivoEstudiantes); // Cierra el archivo creado
-        return;
+        // Inicializa el tamaño del vector de estudiantes en 0 para indicar que no hay nadie
+    *tamanoVectorEstudiantes = 0; 
+    fclose(archivoEstudiantes); // Cierra el archivo creado
+    return;
     }
     // Inicializa el contador
     *tamanoVectorEstudiantes = 0; 
@@ -198,37 +197,53 @@ void menuPrincipalEstudiante(){
                 break;
             case 2:
                 //Se imprimen todos los estudiantes guardados
-                for (int contador = 0; contador < tamanoVectorEstudiantes; contador++){
+                if(tamanoVectorEstudiantes == 0){
+                    printf("\nNo hay estudiantes para mostar!\n");
+                    break;
+                }else{
+                    for (int contador = 0; contador < tamanoVectorEstudiantes; contador++){
                     printf("\nEstudiante %d:\n", contador);
                     mostrarEstudiante(estudiantes[contador]);
+                    }
                 }
                 break;
             case 3:
-                //Validamos la existencia del estudiante en el vector
-                printf("\nIngrese el ID del estudiante a modificar: ");
-                scanf("%d", &validarId);
-                for(int contador = 0; contador < tamanoVectorEstudiantes; contador++){
-                    if(validarId != estudiantes[contador].id){
-                        printf("\nEl ID ingresado no corresponde a ningun estudiante!\n");
-                        break;
-                    }else if(validarId == estudiantes[contador].id){
-                        printf("\nEstudiante encontrado!\n");
-                        estudiantes[contador] = actualizarEstudiante(estudiantes, contador);
+                if(tamanoVectorEstudiantes == 0){
+                    printf("\nNo hay estudiantes para modificar!\n");
+                    break;
+                }else{
+                    //Validamos la existencia del estudiante en el vector
+                    printf("\nIngrese el ID del estudiante a modificar: ");
+                    scanf("%d", &validarId);
+                    for(int contador = 0; contador < tamanoVectorEstudiantes; contador++){
+                        if(validarId != estudiantes[contador].id){
+                            printf("\nEl ID ingresado no corresponde a ningun estudiante!\n");
+                            break;
+                        }else if(validarId == estudiantes[contador].id){
+                            printf("\nEstudiante encontrado!\n");
+                            estudiantes[contador] = actualizarEstudiante(estudiantes, contador);
+                        }
                     }
                 }
                 break;
             case 4:
-                //Validamos la existencia del estudiante en el vector
-                printf("\nIngrese el ID del estudiante a eliminar: ");
-                scanf("%d", &validarId);
-                for(int contador = 0; contador < tamanoVectorEstudiantes; contador++){
-                    if(validarId != estudiantes[contador].id){
-                        printf("\nEl ID ingresado no corresponde a ningun estudiante!\n");
-                        break;
-                    }else if(validarId == estudiantes[contador].id){
-                        printf("\nEstudiante encontrado!\n");
-                        eliminarEstudiante(estudiantes, &tamanoVectorEstudiantes, validarId);
-                        break;
+            if(tamanoVectorEstudiantes == 0){
+                    printf("\nNo hay estudiantes para eliminar!\n");
+                    break;
+                }else{
+                    //Validamos la existencia del estudiante en el vector
+                    printf("\nIngrese el ID del estudiante a eliminar: ");
+                    scanf("%d", &validarId);
+                    for(int contador = 0; contador < tamanoVectorEstudiantes; contador++){
+                        if(validarId != estudiantes[contador].id){
+                            printf("\nEl ID ingresado no corresponde a ningun estudiante!\n");
+                            break;
+                        }else if(validarId == estudiantes[contador].id){
+                            printf("\nEstudiante encontrado!\n");
+                            eliminarEstudiante(estudiantes, &tamanoVectorEstudiantes, validarId);
+                            guardararchivoEstudiantes(estudiantes, tamanoVectorEstudiantes); //Guardamos el estudiante después de crearlo
+                            break;
+                        }
                     }
                 }
                 break;

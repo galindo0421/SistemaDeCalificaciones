@@ -145,7 +145,7 @@ void menuPrincipalDocente(){
 
     leerArchvivosDocentes(docente, &tamanoVectorDocentes);
 
-    while(opcion = !0){
+    while(opcion != 0){
         printf("\n--- Menu CRUD de Docentes ---\n");
         printf("\n1. Crear usuario de docente");
         printf("\n2. Filtrar un docente");
@@ -156,8 +156,6 @@ void menuPrincipalDocente(){
         scanf("%d", &opcion);
         switch(opcion){
             case 1:
-            
-        
                 if (tamanoVectorDocentes < MAXDOCENTES){
                     Docente docentes = crearUsuarioDocente();
                     docente[tamanoVectorDocentes] = docentes;
@@ -169,16 +167,12 @@ void menuPrincipalDocente(){
                 }
                 break;
             case 2:
-            
-        
                 for (int contador = 0; contador < tamanoVectorDocentes; contador++){
                     printf("\nDocente %d:\n", contador);
                     mostrarDocente(docente[contador]);
                 }
                 break;
             case 3:
-            
-        
                 printf("\nIngrese ID del docente a modificar: ");
                 scanf("%d", &validarId);
                 for(int contador = 0; contador < tamanoVectorDocentes; contador++){
@@ -192,8 +186,6 @@ void menuPrincipalDocente(){
                 }
                 break;
             case 4:
-            
-        
                 printf("\nIngrese ID del docente a eliminar: ");
                 scanf("%d", &validarId);
                 for(int contador = 0; contador < tamanoVectorDocentes; contador++){

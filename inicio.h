@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
 #include <windows.h>
 #include <stdlib.h>
 #include "admin.h"
@@ -18,7 +17,7 @@ typedef enum {
 } Menu;
 
 // Implementación del menú principal
-Menu mostrarMenuPrincipal() {
+Menu menuPrincipal() {
     Menu opcion;
 
     printf("\n-----Bienvenido a CalifiC-----\n");
@@ -26,12 +25,12 @@ Menu mostrarMenuPrincipal() {
     printf("1. Administrador\n");
     printf("2. Docente\n");
     printf("3. Estudiante\n");
-    printf("Selecciona una opción:\n");
+    printf("Selecciona una opción: ");
     scanf("%d", (int*)&opcion); // Lee la opción y la convierte a tipo Menu
 
     switch (opcion) {
         case MenuPrincipalAdmin:
-            menuPrincipalAdmin();
+            menuGestionCruds();
             break;
         case MenuPrincipalDocente:
             menuPrincipalDocente();
