@@ -1,13 +1,10 @@
-//Definimos la macro DOCENTE_H:
 #ifndef DOCENTE_H
 #define DOCENTE_H
-//Incluímos las librerías y otros archivos.h que vamos a utilizar:
 #include <stdio.h>
 #include <stdlib.h>
 #include "utilidades.h"
 #include "asignatura.h"
 
-// Creación de la estructura docente:
 typedef struct {
     int id;
     char nombre[50];
@@ -21,7 +18,7 @@ Docente crearUsuarioDocente();
 void mostrarDocente(Docente docente);
 void menuActualizarDocente();
 Docente actualizarDatosDocente(Docente *docentes, int tamanoVector);
-void guardarArchivoDocentes(Docente *docentes, int tamanoVectorDocentes);
+void guardararchivoDocentes(Docente *docentes, int tamanoVectorDocentes);
 void leerArchvivosDocentes(Docente *docentes, int *tamanoVectorDocentes);
 void eliminarUsuarioDocente(Docente *docentes, int *tamanoVectorDocentes, int idDocente);
 void menuPrincipalDocente();
@@ -96,8 +93,8 @@ void mostrarDocente(Docente docente){
     printf("\nContrasena: %s", docente.contrasena);
 }
 
-void guardarArchivoDocente(Docente *docente, int tamanoVectorDocentes){
-    FILE *archivoDocentesDocentes = fopen("data/docentes.bat", "wb"); //Modifica todo el archivoEstudiantes en binario, cargando y actualizando todo el vector
+void guardarArchivosDocentes(Docente *docente, int tamanoVectorDocentes){
+    FILE *archivoDocentesDocentes = fopen("data/docentes.bat", "wb"); 
     if(archivoDocentesDocentes == NULL){
         perror("Error al abrir archivo Docentes");
         exit(EXIT_FAILURE);
@@ -107,46 +104,33 @@ void guardarArchivoDocente(Docente *docente, int tamanoVectorDocentes){
 }
 
 void leerArchvivosDocentes(Docente *docente, int *tamanoVectorDocentes){
-    // Lee el archivo estudiantes en binario
-    FILE *archivoDocente = fopen("data/docentes.bat", "wb");
-    //Evaluamos si no está creado
-    if(archivoDocente == NULL){
-        // En caso que no esté creado, lo creamos de tipo binario
-        archivoDocente = fopen("data/docentes.bat", "wb");
-        // Validamos nuevamente que esté creado
-        if(archivoDocente == NULL){
-            perror("Error al crear el archivo de docentes");
-            exit(EXIT_FAILURE); // Retorna un código de error
-        }
-        // Inicializa el tamaño del vector de estudiantes
-        *tamanoVectorDocentes = 0; // No existen docentes aún
-        fclose(archivoDocente);  // Cierra el archivo creado
-        return;
+    FILE *archivoDocentes = fopen("data/docentes.bat", "rb");
+    if (archivoDocentes == NULL) {
+        perror("Error al abrir archivo de docentes");
+        exit(EXIT_FAILURE);
     }
-    // Inicializa el contador
-    *tamanoVectorDocentes = 0;
-    while(*tamanoVectorDocentes < MAXDOCENTES && fread(&docente[*tamanoVectorDocentes], sizeof(Docente), 1, archivoDocente)){
+
+    *tamanoVectorDocentes = 0; // Inicializa el contador
+    while (*tamanoVectorDocentes < MAXDOCENTES && fread(&docente[*tamanoVectorDocentes], sizeof(Docente), 1, archivoDocentes)) {
         (*tamanoVectorDocentes)++;
     }
 }
 
 void eliminarUsuarioDocente(Docente *docentes, int *tamanoVectorDocentes, int idDocente){
     int posicionDocenteEliminar = -1;
-    //Suponemos que el usuario docente no existe, inializamos en -1:
+
     for (int contador = 0; contador < *tamanoVectorDocentes; contador++){
-        if (docentes[contador].id == idDocente){ //Buscamos el id del docente en el vector
-            posicionDocenteEliminar = contador; //Asignamos la posición a la variable que vamos a usar
+        if (docentes[contador].id == idDocente){
+            posicionDocenteEliminar = contador; 
             break;
         }
     }
 
-    if (posicionDocenteEliminar != -1){
+    if (posicionDocenteEliminar != -1) {
         for (int contador = posicionDocenteEliminar; contador < *tamanoVectorDocentes - 1; contador++){
-            //Reescribimos todo el vector desde el punto de referencia del docente a eliminar
             docentes[contador] = docentes[contador + 1];
-            //Los docentes modificados fueron movidos una posición a la izquierda
         }
-        (*tamanoVectorDocentes)--; //Reajustamos el tamaño del vector
+        (*tamanoVectorDocentes)--;
         printf("El docente con ID %d, ha sido eliminado exitosamente.\n", idDocente);
     } else {
         printf("El docente con ID %d, no ha sido encontrado.\n", idDocente);
@@ -159,7 +143,7 @@ void menuPrincipalDocente(){
     int opcion = 1;
     int validarId;
 
-    leerArchvivosDocentes(docente, &tamanoVectorDocentes); //Si hay datos en el vector, los leemos
+    leerArchvivosDocentes(docente, &tamanoVectorDocentes);
 
     while(opcion = !0){
         printf("\n--- Menu CRUD de Docentes ---\n");
@@ -172,26 +156,29 @@ void menuPrincipalDocente(){
         scanf("%d", &opcion);
         switch(opcion){
             case 1:
-                // Validamos que halla espacio para crear más usuarios
+            
+        
                 if (tamanoVectorDocentes < MAXDOCENTES){
                     Docente docentes = crearUsuarioDocente();
                     docente[tamanoVectorDocentes] = docentes;
                     tamanoVectorDocentes++;
-                    guardarArchivoDocente(docente, tamanoVectorDocentes);
+                    guardarArchivosDocentes(docente, tamanoVectorDocentes);
                     printf("\nEl usuario del docente fue creado exitosamente.\n");
                 } else {
                     printf("\nCapacidad maxima alcanzada. No se pueden crear mas usuarios para docentes.\n");
                 }
                 break;
             case 2:
-                //Se imprimen todos los usuarios de los docentes guardados
+            
+        
                 for (int contador = 0; contador < tamanoVectorDocentes; contador++){
                     printf("\nDocente %d:\n", contador);
                     mostrarDocente(docente[contador]);
                 }
                 break;
             case 3:
-                //Validamos la existencia del docente en el vector
+            
+        
                 printf("\nIngrese ID del docente a modificar: ");
                 scanf("%d", &validarId);
                 for(int contador = 0; contador < tamanoVectorDocentes; contador++){
@@ -205,7 +192,8 @@ void menuPrincipalDocente(){
                 }
                 break;
             case 4:
-                //Validamos la existencia del estudiante en el vector
+            
+        
                 printf("\nIngrese ID del docente a eliminar: ");
                 scanf("%d", &validarId);
                 for(int contador = 0; contador < tamanoVectorDocentes; contador++){
